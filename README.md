@@ -4,7 +4,31 @@
 This repository contains code to accompany the AirNow Fire and Smoke Map (FASM) Sensor Network Data Acceptance Protocol (link), a process that the U.S. Environmental Protection Agency (EPA) and the U.S. Forest Service (USFS) have tested for adding information from different sensor manufacturers onto the FASM. This code is intended to help users generate a particular set of bar plots to anayze and visualize AQI category agreement between their sensors and AirNow reference monitors within a specified radius.
 ## Getting Started
 
-Follow the example laid out in (link). Should this example and these functions not work exactly for you, feel free to take the code as inspiration for generating these plots in a way that works best for you.
+To get a copy of this project up and running on your local machine, follow these steps.
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+* **R**
+* **RStudio**
+* **Git**
+### Cloning the Repository to RStudio
+
+1.  **On GitHub:**
+    *   Navigate to this repository's main page.
+    *   Click the green **Code** button.
+    *   Copy the HTTPS URL of the repository.
+2.  **In RStudio:**
+    *   Open RStudio.
+    *   Go to **File > New Project**.
+    *   Select **Version Control**.
+    *   Choose **Git**.
+    *   In the "Repository URL" field, paste the URL you copied from GitHub.
+    *   RStudio will automatically suggest a "Project directory name". You can accept this or change it if needed.
+    *   Choose a location on your computer to save the project by clicking **Browse**.
+    *   Click **Create Project**.
+
+Once the repository is cloned, you can follow the example laid out in (link). Then add your own sensor data to create your own AQI category agreement barplots. Should this example and these functions not work exactly for you, feel free to take the code as inspiration for generating these plots in a way that works best for you. 
 ## Contact
 
 Please direct inquiries to:
