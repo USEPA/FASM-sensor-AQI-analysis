@@ -8,9 +8,13 @@ Follow the example laid out in (link).
 ## Contact
 
 Please direct inquiries to:
+
 Elizabeth Good, Physical Scientist
+
 U.S. EPA, Office of Air Quality Planning and Standards
+
 Ambient Air Monitoring Group
+
 Email: good.elizabeth@epa.gov
 ## References and Acknowledgements 
 
