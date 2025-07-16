@@ -4,7 +4,7 @@
 This repository contains code to accompany the AirNow Fire and Smoke Map (FASM) Sensor Network Data Acceptance Protocol (link), a process that the U.S. Environmental Protection Agency (EPA) and the U.S. Forest Service (USFS) have tested for adding information from different sensor manufacturers onto the FASM. This code is intended to help users generate a particular set of bar plots to anayze and visualize AQI category agreement between their sensors and AirNow reference monitors within a specified radius.
 ## Getting Started
 
-Follow the example laid out in (link).
+Follow the example laid out in (link). Should this example and these functions not work exactly for you, feel free to take the code as inspiration for generating these plots in a way that works best for you.
 ## Contact
 
 Please direct inquiries to:
