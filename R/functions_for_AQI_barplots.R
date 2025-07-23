@@ -175,8 +175,8 @@ create_combined_barplot <- function(
     geom_segment(aes(x = 6.5, y = threshold_1, xend = 7.5, yend = threshold_1), lty = 2, linewidth = 1) +
     geom_segment(aes(x = 0.5, y = threshold_2, xend = 4.5, yend = threshold_2), lty = 2, linewidth = 1) +
     geom_segment(aes(x = 7.5, y = threshold_2, xend = 11.5, yend = threshold_2), lty = 2, linewidth = 1) +
-    labs(y = "frequency (%)",
-         x = "AQI Difference (Sensor - AirNow)") +
+    labs(y = "Percentage of Sensor NowCast Datapoints",
+         x = "AQI Category Difference (Sensor - AirNow)") +
     theme_minimal(base_size = 16) +
     ylim(0, 100)
   
@@ -455,7 +455,7 @@ create_categories_barplot_hazardous <- function(
     geom_segment(aes(x = 6.5, y = threshold_1, xend = 7.5, yend = threshold_1), lty = 2, size = 1) +
     geom_segment(aes(x = 0.5, y = threshold_2, xend = 4.5, yend = threshold_2), lty = 2, size = 1) +
     geom_segment(aes(x = 7.5, y = threshold_2, xend = 11.5, yend = threshold_2), lty = 2, size = 1) +
-    geom_text(aes(label=percentage), vjust = -.3, color="black", size = 5) +
+    geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
               size = 5) +
@@ -523,7 +523,13 @@ create_categories_barplot_hazardous <- function(
   plot <- ggarrange(good, moderate, usg, unhealthy, veryunhealthy, hazardous,
                     ncol = 3, nrow = 2, common.legend = FALSE)
   
-  return(plot)
+  annotate_figure(plot,
+                  bottom = text_grob("AQI Category Difference (Sensor - AirNow)",
+                                     hjust = 0.5,
+                                     size = 15),
+                  left = text_grob("Percentage of Sensor NowCast Datapoints",
+                                   rot = 90,
+                                   size = 15))
   
 }
 
@@ -744,7 +750,7 @@ create_categories_barplot_unhealthy <- function(
     geom_segment(aes(x = 6.5, y = threshold_1, xend = 7.5, yend = threshold_1), lty = 2, size = 1) +
     geom_segment(aes(x = 0.5, y = threshold_2, xend = 4.5, yend = threshold_2), lty = 2, size = 1) +
     geom_segment(aes(x = 7.5, y = threshold_2, xend = 11.5, yend = threshold_2), lty = 2, size = 1) +
-    geom_text(aes(label=percentage), vjust = -0.7, color="black", size = 5) +
+    geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
               size = 5) +
@@ -757,7 +763,14 @@ create_categories_barplot_unhealthy <- function(
   plot <- ggarrange(good, moderate, usg, unhealthy,
                     ncol = 2, nrow = 2, common.legend = FALSE)
   
-  return(plot)
+  annotate_figure(plot,
+                  bottom = text_grob("AQI Category Difference (Sensor - AirNow)",
+                                     hjust = 0.5,
+                                     size = 15),
+                  left = text_grob("Percentage of Sensor NowCast Datapoints",
+                                   rot = 90,
+                                   size = 15))
+
   
 }
 
@@ -869,7 +882,7 @@ create_categories_barplot_very_unhealthy <- function(
     geom_segment(aes(x = 6.5, y = threshold_1, xend = 7.5, yend = threshold_1), lty = 2, size = 1) +
     geom_segment(aes(x = 0.5, y = threshold_2, xend = 4.5, yend = threshold_2), lty = 2, size = 1) +
     geom_segment(aes(x = 7.5, y = threshold_2, xend = 11.5, yend = threshold_2), lty = 2, size = 1) +
-    geom_text(aes(label=percentage), vjust = -0.8, color="black", size = 5) +
+    geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
               size = 5) +
@@ -1034,7 +1047,7 @@ create_categories_barplot_very_unhealthy <- function(
     geom_segment(aes(x = 6.5, y = threshold_1, xend = 7.5, yend = threshold_1), lty = 2, size = 1) +
     geom_segment(aes(x = 0.5, y = threshold_2, xend = 4.5, yend = threshold_2), lty = 2, size = 1) +
     geom_segment(aes(x = 7.5, y = threshold_2, xend = 11.5, yend = threshold_2), lty = 2, size = 1) +
-    geom_text(aes(label=percentage), vjust = -1.5, color="black", size = 5) +
+    geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
               size = 5) +
@@ -1047,7 +1060,13 @@ create_categories_barplot_very_unhealthy <- function(
   plot <- ggarrange(good, moderate, usg, unhealthy, veryunhealthy, 
                     ncol = 3, nrow = 2, common.legend = FALSE)
   
-  return(plot)
+  annotate_figure(plot,
+                  bottom = text_grob("AQI Category Difference (Sensor - AirNow)",
+                                     hjust = 0.5,
+                                     size = 15),
+                  left = text_grob("Percentage of Sensor NowCast Datapoints",
+                                   rot = 90,
+                                   size = 15))
   
 }
 
@@ -1226,7 +1245,13 @@ create_categories_barplot_usg <- function(
   plot <- ggarrange(good, moderate, usg, 
                     ncol = 2, nrow = 2, common.legend = FALSE)
   
-  return(plot)
+  annotate_figure(plot,
+                  bottom = text_grob("AQI Category Difference (Sensor - AirNow)",
+                                     hjust = 0.5,
+                                     size = 15),
+                  left = text_grob("Percentage of Sensor NowCast Datapoints",
+                                   rot = 90,
+                                   size = 15))
   
 }
 
@@ -1350,6 +1375,12 @@ create_categories_barplot_moderate <- function(
   plot <- ggarrange(good, moderate, 
                     ncol = 2, nrow = 1, common.legend = FALSE)
   
-  return(plot)
+  annotate_figure(plot,
+                  bottom = text_grob("AQI Category Difference (Sensor - AirNow)",
+                                     hjust = 0.5,
+                                     size = 15),
+                  left = text_grob("Percentage of Sensor NowCast Datapoints",
+                                   rot = 90,
+                                   size = 15))
   
 }

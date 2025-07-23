@@ -153,7 +153,7 @@ airnow_adjacent <-
 
 # Unlisted AQI Category Data Frame
 
-The `create_AQI_unlisted` function returns a data frame named “AQI_unlisted” with two columns, *airnow* and *sensor*. This is the PM2.5 NowCast AQI category for each hour where the sensor and AirNow monitor pairs both have data. The AQI categories are represented as numbers, as described in the table below. 
+The `create_AQI_unlisted` function returns a data frame named “AQI_unlisted” with two columns, *airnow* and *sensor*. This is the PM2.5 NowCast AQI category for each hour where the sensor and AirNow monitor pairs both have data. The AQI categories are represented as numbers, as described in the table below. To read more about the AQI categories, see https://www.airnow.gov/aqi/aqi-basics/. 
 
  AQI Category| Number Assignment                              
  :---:|:---:|
@@ -174,7 +174,7 @@ AQI_unlisted <- create_AQI_unlisted(sensor_adjacent = sensor_adjacent,
 
 The `create_combined_barplot` function accepts the `AQI_unlisted` data frame and returns a bar plot comparing AQI categroy agreement between the sensors and AirNow monitors across all AQI categories combined. You can specify horizontal lines where thresholds for agreement can be visualized. Thresholds can be shown for plus/minus one AQI category and plus/minus two or more AQI categories. Currently, the proposed thresholds for plus/minus one AQI category is no more than **5%** of the time and plus/minus two or more AQI categories no more than **1%** of the time.
 
-```{r combined bar plot, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center'}
+```{r combined bar plot, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(9,6)}
 
 create_combined_barplot(AQI_unlisted = AQI_unlisted,
                         threshold_1 = 5, # input the threshold for plus/minus one AQI category
@@ -188,7 +188,7 @@ create_combined_barplot(AQI_unlisted = AQI_unlisted,
 
 There are a series of function for making AQI category agreement bar plot grids depending on the highest AQI category your reference monitor data reaches. They are all named beginning with `create_categories_barplot_[AQI Category]`. These functions create a bar plot grid showing AQI category agreement by sensors compared to AirNow monitors for each AQI category reported by the reference monitors. Choose the function based on the highest AQI category that's reported by your reference monitor data. For example, if you reference monitor data reaches the Very Unhealhty category (represented by the number 5 in the `AQI_unlisted` data frame) you would use the `create_categories_barplot_veryunhealthy` function. As above, thresholds can be shown for plus/minus one AQI category and plus/minus two or more AQI categories. Currently, the proposed thresholds for plus/minus one AQI category is no more than **30%** of the time and plus/minus two or more AQI categories no more than **1%** of the time within each AQI category reported by the reference monitors.
 
-```{r bar plot grid, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center'}
+```{r bar plot grid, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(9,6)}
 # with this example data, the max AQI category from the reference monitors was Unhealthy (4)
 create_categories_barplot_unhealthy(AQI_unlisted = AQI_unlisted,
                                     threshold_1 = 30, # input the threshold for plus/minus one AQI category
