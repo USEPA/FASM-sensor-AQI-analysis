@@ -5,6 +5,9 @@ date: July 16, 2025
 output: html_document
 ---
 
+This tutorial walks through the `template_for_sensor_vs_monitor.R` script to describe the steps and functions used to generate the AQI category agreement barplots used as part of the evaluations for new sensors seeking to be displayed on the AirNow Fire and Smoke Map.
+
+
 # Set Up
 This makes sure the necessary packages are installed and loaded and that the functions are called in from their source script *'functions_for_AQI_barplots.R'*. Note that this Rmd uses the `here` package to work with paths in this repository. The `here` package constructs paths relative to the project root.
 
