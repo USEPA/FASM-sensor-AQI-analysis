@@ -238,7 +238,7 @@ create_categories_barplot_hazardous <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#00E400"),
@@ -293,7 +293,7 @@ create_categories_barplot_hazardous <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FFFF00"),
@@ -348,7 +348,7 @@ create_categories_barplot_hazardous <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FF7E00"),
@@ -403,7 +403,7 @@ create_categories_barplot_hazardous <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FF0000"),
@@ -458,7 +458,7 @@ create_categories_barplot_hazardous <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#8F3F97"),
@@ -513,7 +513,7 @@ create_categories_barplot_hazardous <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#7E0023"),
@@ -588,7 +588,7 @@ create_categories_barplot_unhealthy <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#00E400"),
@@ -643,7 +643,7 @@ create_categories_barplot_unhealthy <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FFFF00"),
@@ -698,7 +698,7 @@ create_categories_barplot_unhealthy <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FF7E00"),
@@ -753,7 +753,7 @@ create_categories_barplot_unhealthy <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FF0000"),
@@ -830,7 +830,7 @@ create_categories_barplot_very_unhealthy <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#00E400"),
@@ -885,7 +885,7 @@ create_categories_barplot_very_unhealthy <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FFFF00"),
@@ -940,7 +940,7 @@ create_categories_barplot_very_unhealthy <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FF7E00"),
@@ -995,7 +995,7 @@ create_categories_barplot_very_unhealthy <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FF0000"),
@@ -1050,7 +1050,7 @@ create_categories_barplot_very_unhealthy <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#8F3F97"),
@@ -1125,7 +1125,7 @@ create_categories_barplot_usg <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#00E400"),
@@ -1180,7 +1180,7 @@ create_categories_barplot_usg <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FFFF00"),
@@ -1235,7 +1235,7 @@ create_categories_barplot_usg <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FF7E00"),
@@ -1310,7 +1310,7 @@ create_categories_barplot_moderate <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#00E400"),
@@ -1365,7 +1365,7 @@ create_categories_barplot_moderate <- function(
     geom_text(aes(label=percentage), vjust = -0.3, color="black", size = 5) +
     geom_text(x = 9, y = 90, 
               label = sprintf("Obs = %s", obs),
-              size = 5) +
+              size = 4) +
     theme(legend.position = "none") +
     facet_grid(. ~ tempvar) +
     theme(strip.background = element_rect(fill="#FFFF00"),
