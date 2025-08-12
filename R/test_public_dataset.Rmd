@@ -116,10 +116,10 @@ airnow <- monitor_load(
   )
 ```
 
-Data might need to be trimmed slightly for timestamps to match. In this example, we're only looking at the year 2019, so the sensor dataset will need to be trimmed to match the AirNow data. 
+Data might need to be trimmed slightly for timestamps to match. In this example, we're only looking at the year 2020, so the sensor data set will need to be trimmed to match the AirNow data. 
 
 ```{r time stamp trim, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
-# trim sensor data and AirNow data for time stamps to match
+# trim sensor data and AirNow data for start and end time stamps to match
 sensor$data <- sensor$data %>%
   filter(datetime > "2020-01-01 00:00:00") %>%
   filter(datetime < "2020-12-31 23:00:00")
@@ -132,7 +132,7 @@ sensor$data <- sensor$data[-c(8731:8782),]
 
 # Find Adjacent Pairs
 
-Now that data is loaded, you can use the `findAdjacentPairs` function to find sensors that are within a specifid radius of nearby AirNow monitors. The proposed radius for analysis is 1000 meters, but this can be easily adjusted in the `findAdjacentPairs` function to test any radius in meters. This function adds two columns to the sensor meta data: the *airnow_closestDistance* and the *airnow_id* to identify the nearest AirNow monitors to the sensors within the specified radius. The following warning may appear when this function is used and can be ignored: "number of items to replace is not a multiple of replacement length." The AirNow data is then filtered to retain the monitors nearby the sensors, and the PM2.5 NowCast algorithm is applied to be most representative of how data is displayed on the Fire and Smoke map. To read more about the function and the NowCast algorithm, see https://mazamascience.github.io/AirMonitor/articles/NowCast.html.
+Now that data is loaded, you can use the `findAdjacentPairs` function to find sensors that are within a specified radius of nearby AirNow monitors. The proposed radius for analysis is 1000 meters, but this can be easily adjusted in the `findAdjacentPairs` function to test any radius in meters. This function adds two columns to the sensor meta data: the *airnow_closestDistance* and the *airnow_id* to identify the nearest AirNow monitor to the sensor within the specified radius. The following warning may appear when this function is used and can be ignored: "number of items to replace is not a multiple of replacement length." The AirNow data is then filtered to retain the monitors identified as nearby the sensors, and the PM2.5 NowCast algorithm is applied to be most representative of how data is displayed on the Fire and Smoke map. To read more about the function and the NowCast algorithm, see https://mazamascience.github.io/AirMonitor/articles/NowCast.html.
 
 ```{r findAdjacentPairs, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 # returns mts_monitor object of sensors within specified radius of reference monitors
@@ -181,7 +181,7 @@ AQI_unlisted <- create_AQI_unlisted(sensor_adjacent = sensor_adjacent,
 
 # Overall AQI Category Agreement Bar Plot
 
-The `create_combined_barplot` function accepts the `AQI_unlisted` data frame and returns a bar plot comparing AQI categroy agreement between the sensors and AirNow monitors across all AQI categories combined. You can specify horizontal lines where thresholds for agreement can be visualized. Thresholds can be shown for plus/minus one AQI category and plus/minus two or more AQI categories. Currently, the proposed thresholds for plus/minus one AQI category is no more than **5%** of the time and plus/minus two or more AQI categories no more than **1%** of the time.
+The `create_combined_barplot` function accepts the `AQI_unlisted` data frame and returns a bar plot comparing AQI category agreement between the sensors and AirNow monitors across all AQI categories combined. You can specify horizontal lines where thresholds for agreement can be visualized. Thresholds can be shown for plus/minus one AQI category and plus/minus two or more AQI categories. Currently, the proposed thresholds for plus/minus one AQI category is no more than **5%** of the time and plus/minus two or more AQI categories no more than **1%** of the time.
 
 ```{r combined bar plot, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
 
@@ -195,10 +195,10 @@ create_combined_barplot(AQI_unlisted = AQI_unlisted,
 
 # AQI Category Agreement Bar Plot Grid
 
-There are a series of function for making AQI category agreement bar plot grids depending on the highest AQI category your reference monitor data reaches. They are all named beginning with `create_categories_barplot_[AQI Category]`. These functions create a bar plot grid showing AQI category agreement by sensors compared to AirNow monitors for each AQI category reported by the reference monitors. Choose the function based on the highest AQI category that's reported by your reference monitor data. For example, if you reference monitor data reaches the Very Unhealhty category (represented by the number 5 in the `AQI_unlisted` data frame) you would use the `create_categories_barplot_veryunhealthy` function. As above, thresholds can be shown for plus/minus one AQI category and plus/minus two or more AQI categories. Currently, the proposed thresholds for plus/minus one AQI category is no more than **30%** of the time and plus/minus two or more AQI categories no more than **1%** of the time within each AQI category reported by the reference monitors.
+There are a series of functions for making AQI category agreement bar plot grids depending on the highest AQI category reached by your reference monitor data. They are all named beginning with `create_categories_barplot_[AQI Category]`. These functions create a bar plot grid showing AQI category agreement by sensors compared to AirNow monitors for each AQI category reported by the reference monitors. Choose the function based on the highest AQI category reported by your reference monitor data. For example, if your reference monitor data reaches the Very Unhealthy category (represented by the number 5 in the `AQI_unlisted` data frame) you would use the `create_categories_barplot_veryunhealthy` function. As above, thresholds can be shown for plus/minus one AQI category and plus/minus two or more AQI categories. Currently, the proposed threshold for plus/minus one AQI category is no more than **30%** of the time and plus/minus two or more AQI categories no more than **1%** of the time within each AQI category reported by the reference monitors.
 
 ```{r bar plot grid, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
-# with this example data, the max AQI category from the reference monitors was Unhealthy (4)
+# with this example data, the max AQI category from the reference monitors was Hazardous (6)
 create_categories_barplot_hazardous(AQI_unlisted = AQI_unlisted,
                                     threshold_1 = 30, # input the threshold for plus/minus one AQI category
                                     threshold_2 = 1)  # input the threshold for plus/minus two or more AQI categories
