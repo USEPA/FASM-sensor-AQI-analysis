@@ -13,21 +13,21 @@
 #' have a nearby AirNow station within the given radius. The function returns a data frame of sensors 
 #' that are within the specified radius of AirNow stations, sorted by their distance to their nearest AirNow station.
 #'
-#' @param sensor A list containing sensor data and metadata, including `longitude` and `latitude`.
-#' @param airnow A list containing AirNow station data and metadata, including locations.
+#' @param sensor A `mts_monitor` object containing sensor data and metadata, including `longitude` and `latitude`.
+#' @param airnow A `mts_monitor` object containing AirNow monitoring station data and metadata, including locations.
 #' @param radius A numeric value specifying the radius (in meters) within which sensors should be considered 
-#' adjacent to AirNow stations. Default is 500 meters.
+#' adjacent to AirNow stations. Default is 1000 meters.
 #'
-#' @return A filtered and sorted data frame of sensors within the specified radius of AirNow stations.
+#' @return A filtered and sorted `mts_monitor` object of sensors paired with nearby AirNow stations within the specified radius.
 #'
 #' @examples
 #' # Example usage:
-#' sensors_near_airnow <- findAdjacentPairs(sensor_data, airnow_data, radius = 500)
+#' sensors_near_airnow <- findAdjacentPairs(sensor_data, airnow_data, radius = 1000)
 #'
 findAdjacentPairs <- function(
     sensor,
     airnow,
-    radius = 500
+    radius = 1000
 ) {
   
   # Add distance information to sensor$meta
@@ -62,24 +62,24 @@ findAdjacentPairs <- function(
   
 }
 
-
 # =============================
 # Function: create_AQI_unlisted
 # =============================
 #' create_AQI_unlisted
 #'
-#' This function calculates Air Quality Index (AQI) categories for each pair of sensor and AirNow monitor
-#' that are adjacent. It combines data from both sources, computes AQI categories based on PM2.5 levels, 
-#' and returns a data frame with AQI values for AirNow and sensor data, unlisted and combined.
+#' This function calculates Air Quality Index (AQI) categories as a numeric value for each hour of paired 
+#' PM2.5 concentration data from sensor / AirNow monitor pairs that are adjacent. It combines data from 
+#' both sources, computes numeric AQI categories based on hourly PM2.5 concentrations, and returns a data 
+#' frame with numeric AQI values for AirNow and sensor data, unlisted and combined as two columns.
 #'
-#' @param sensor_adjacent A list containing metadata and data for sensors that are adjacent to AirNow monitors.
-#' @param airnow_adjacent A list containing metadata and data for AirNow monitors that are adjacent to sensors.
+#' @param sensor_adjacent A `mts_monitor` object containing metadata and data for sensors that are adjacent to AirNow monitors.
+#' @param airnow_adjacent A `mts_monitor` object containing metadata and data for AirNow monitors that are adjacent to sensors.
 #'
-#' @return A data frame containing unlisted AQI values for both AirNow monitors and sensors.
+#' @return A data frame containing unlisted hourly paired AQI values for adjacent AirNow monitors and sensors.
 #'
 #' @examples
 #' # Example usage:
-#' AQI_data <- create_AQI_unlisted(sensor_adjacent_data, airnow_adjacent_data)
+#' AQI_unlisted_data <- create_AQI_unlisted(sensor_adjacent_data, airnow_adjacent_data)
 #'
 create_AQI_unlisted <- function(
     sensor_adjacent,
@@ -161,16 +161,17 @@ create_AQI_unlisted <- function(
 # =============================
 #' create_combined_barplot
 #'
-#' This function creates a bar plot to visualize the differences in AQI categories between sensor readings and AirNow monitor readings.
-#' It calculates the percentage of sensor NowCast data points that deviate from AirNow readings across different AQI categories
-#' and plots these differences. Threshold lines can be added to the plot for reference.
+#' This function creates a bar plot to visualize the differences in reported AQI categories between adjacent sensors 
+#' and AirNow monitors. It calculates the percentage of reported sensor NowCast AQI categories that deviate from reported 
+#' AirNow monitor NowCast AQI categories across all AQI categories and displays these differences as a bar plot. 
+#' Horizontal lines to represent miscategorization thresholds can be added to the plot for reference.
 #'
-#' @param AQI_unlisted A data frame containing unlisted AQI values for both AirNow monitors and sensors.
+#' @param AQI_unlisted A data frame containing unlisted paired numeric AQI values for adjacent AirNow monitors and sensors.
 #'                      The first column should represent AirNow AQI values and the second column should represent sensor AQI values.
-#' @param threshold_1 A numeric value specifying the position of the first threshold line in the plot.
-#' @param threshold_2 A numeric value specifying the position of the second threshold line in the plot.
+#' @param threshold_1 A numeric value specifying the y-axis position of the first horizontal threshold line in the plot.
+#' @param threshold_2 A numeric value specifying the y-axis position of the second horizontal threshold line in the plot.
 #'
-#' @return A ggplot object representing the bar plot of AQI category deviations.
+#' @return A ggplot bar plot representing AQI category deviations between AirNow monitors and adjacent sensors.
 #'
 #' @examples
 #' # Example usage:
@@ -218,26 +219,30 @@ create_combined_barplot <- function(
   return(plot)
 }
 
-
 # =============================
 # Function: create_plots_by_category 
 # =============================
 #' create_plots_by_category
 #'
-#' This function creates a bar plot to visualize the differences in AQI categories between sensor readings and AirNow monitor readings.
-#' It calculates the percentage of sensor NowCast data points that deviate from AirNow readings across different AQI categories
-#' and plots these differences. Threshold lines can be added to the plot for reference.
+#' This function creates a figure to visualize the differences in reported AQI categories between adjacent sensors 
+#' and AirNow monitors binned by the AQI category reported by the AirNow monitor. It calculates the percentage of reported 
+#' sensor NowCast AQI categories that deviate from reported AirNow monitor NowCast AQI categories within each AQI 
+#' category reported by the AirNow monitors. These differences are displayed as a bar plot for each AQI category reported
+#' by the AirNow monitors, arranged into one figure. Horizontal lines to represent miscategorization thresholds can be 
+#' added to the bar plots for reference.
 #'
-#' @param AQI_unlisted A data frame containing unlisted AQI values for both AirNow monitors and sensors.
+#' @param AQI_unlisted A data frame containing unlisted paired numeric AQI values for adjacent AirNow monitors and sensors.
 #'                      The first column should represent AirNow AQI values and the second column should represent sensor AQI values.
-#' @param threshold_1 A numeric value specifying the position of the first threshold line in the plot.
-#' @param threshold_2 A numeric value specifying the position of the second threshold line in the plot.
+#' @param num_plots A numeric value indicating the highest AQI category reported by an AirNow monitor in `AQI_unlisted`.                       
+#' @param threshold_1 A numeric value specifying the y-axis position of the first horizontal threshold line in the plot.
+#' @param threshold_2 A numeric value specifying the y-axis position of the second horizontal threshold line in the plot.
 #'
-#' @return A ggplot object representing the bar plot of AQI category deviations.
+#' @return A ggplot arrangement of bar plots representing AQI category deviations between adjacent AirNow monitors and sensors, 
+#'          binned by the AQI category reported by the AirNow monitor.
 #'
 #' @examples
 #' # Example usage:
-#' plot <- create_combined_barplot(AQI_unlisted_data, threshold_1 = 5, threshold_2 = 1)
+#' plot <- create_plots_by_category(AQI_unlisted_data, num_plots = 6, threshold_1 = 5, threshold_2 = 1)
 #' print(plot)
 #'
 create_plots_by_category <- function(
