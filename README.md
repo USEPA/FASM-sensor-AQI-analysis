@@ -2,6 +2,27 @@
 ## Background and Overview
 
 This repository contains code to accompany the AirNow Fire and Smoke Map (FASM) Sensor Network Data Acceptance Protocol (link), a process that the U.S. Environmental Protection Agency (EPA) and the U.S. Forest Service (USFS) have tested for adding information from different sensor manufacturers onto the FASM. This code is intended to help users generate a particular set of bar plots to anayze and visualize AQI category agreement between their sensors and AirNow reference monitors within a specified radius.
+## Structure and Contents
+
+The following directory is used to organize the files in this repository:
+
+```
+FASM-sensor-AQI-analysis
+├── docs
+├── R
+└── data
+```
+
+The working directory for all scripts and R Markdown documents will be
+`FASM-sensor-AQI-analysis/`.
+
+The `docs/` directory contains the Rmd and html files the are the tutorial walking through the template script. They are linked to the GitHub pages website for this repository.
+
+The `R/` directory contains the template R script for users to fill in and run the code to perform the analysis as well as supporting source R scripts with necessary functions.
+
+The `data/` directory contains example sensor data sets and is where users should save their own sensor data to perform the analysis.
+
+Each folder has additional information and descriptions in README files.
 ## Getting Started
 
 Follow these steps to set up a copy of this project on your local machine and format your sensor data for use with this repository's code:
