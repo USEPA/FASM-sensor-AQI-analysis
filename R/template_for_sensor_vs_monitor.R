@@ -1,45 +1,37 @@
 # The following script is a template for the comparison analysis between air
-# quality sensors and AirNow monitors. Additional instructions are in the Word 
-# file and source functions are from 'functions_for_AQI_barplots.R'. Areas where
-# user input is required are noted below. 
+# quality sensors and AirNow monitors. A tutorial is provided in the GitHub 
+# pages site https://urban-bassoon-v9zkyqw.pages.github.io/ which follows the 
+# Rmd and html in the docs folder of the FASM-sensor-AQI-analysis repository.
+
+# User input is only required in the sensor data prep section where file names
+# must be input.
 
 # ----- session set up ---------------------------------------------------------
 
-# Load necessary packages
+# Ensure 'here' package is installed
+if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
+library(here)
 
-if(!require("MazamaCoreUtils"))
-  install.packages("MazamaCoreUtils")
-if(!require("dplyr"))
-  install.packages("dplyr")
-if(!require("AirMonitor"))
-  install.packages("AirMonitor")
-if(!require("AirMonitorPlots"))
-  devtools::install_github('mazamascience/AirMonitorPlots', build_vignettes=TRUE)
-if(!require("tidyverse"))
-  install.packages("tidyverse")
-if(!require("AirSensor2"))
-  devtools::install_github('mazamascience/AirSensor2')
-if(!require("ggpubr"))
-  install.packages("ggpubr")
-
-library(MazamaCoreUtils)
-library(dplyr)
-library(AirMonitor)
-library(AirMonitorPlots)
-library(tidyverse)
-library(AirSensor2)
-library(ggpubr)
+# Source requirements to load necessary packages and configurations
+source(here("R/package_requirements.R"))  
+# Ensure the working directory or the project root is set to FASM-sensor-AQI-analysis
 
 # Load utility functions from 'functions_for_AQI_barplots.R'
-source()   # input file path to 'functions_for_AQI_barplots.R'
+source(here("R/functions_for_AQI_barplots.R"))  
+# Ensure the working directory or the project root is set to FASM-sensor-AQI-analysis
 
-# ----- data set up ------------------------------------------------------------
+# ----- sensor data prep -------------------------------------------------------
 
-# Load in sensor data 
-meta_df <- # input file path to meta data (recommend using 'read_csv' rather than 'read.csv')
-  
-data_df <- # input file path to time series data (recommend using 'read_csv' rather than 'read.csv')
-  
+# Ensure your metadata and time series data csv files are saved in the data 
+# folder of the repository (where some examples are already located)
+
+# Load in sensor data (recommend using 'read_csv' rather than 'read.csv')
+meta_df <- read_csv(here("data/YOUR_METADATA.csv")) 
+# replace YOUR_METADATA with the meta data file name in data folder 
+
+data_df <- read_csv(here("data/YOUR_DATA.csv")) 
+# replace YOUR_DATA with time series data file name in data folder 
+
 # Create mts_monitor object 
 sensor <- list(meta = meta_df, 
                data = data_df)
@@ -47,11 +39,25 @@ sensor <- list(meta = meta_df,
 sensor <- structure(sensor, 
                     class = c("mts_monitor", "mts", class(sensor)))
 
-# Load in AirNow data 
+# ----- reference AirNow data --------------------------------------------------
+
+# Extract the start and end date from the sensor data
+startdate <- format(as.Date(min(sensor$data$datetime)), "%Y%m%d")
+enddate <- format(as.Date(max(sensor$data$datetime)), "%Y%m%d")
+
+# Load in AirNow data for the specified date range
 airnow <- monitor_load(
-  startdate = ,            # input start and end date to match sensor data 
-  enddate =                # format example: startdate = 20210601
+  startdate = startdate,  # input start and end date to match sensor data 
+  enddate = enddate       # format example if input manually: startdate = 20210601
 )
+
+# Find a common start and end date and time stamp between the AirNow and sensor data
+aligned_startdate <- max(min(airnow$data$datetime), min(sensor$data$datetime))
+aligned_enddate <- min(max(airnow$data$datetime), max(sensor$data$datetime))
+
+# Filter the data to the overlapping datetime stamps
+airnow$data <- airnow$data[airnow$data$datetime >= aligned_startdate & airnow$data$datetime <= aligned_enddate, ]
+sensor$data <- sensor$data[sensor$data$datetime >= aligned_startdate & sensor$data$datetime <= aligned_enddate, ]
 
 # ----- find adjacent pairs ----------------------------------------------------
 
@@ -78,9 +84,6 @@ airnow_adjacent <-
   airnow_adjacent %>%
   monitor_nowcast(includeShortTerm = TRUE)
 
-# if needed, manually trim (remove) rows in the sensor and AirNow time series 
-# data tables for hourly start and end time stamps to match 
-
 # ----- create unlisted AQI category data frame --------------------------------
 
 AQI_unlisted <- create_AQI_unlisted(sensor_adjacent = sensor_adjacent,
@@ -89,15 +92,15 @@ AQI_unlisted <- create_AQI_unlisted(sensor_adjacent = sensor_adjacent,
 # ----- create combined bar plot -----------------------------------------------
 
 create_combined_barplot(AQI_unlisted = AQI_unlisted,
-                        threshold_1 = 5,    # input the threshold for plus/minus one AQI category
-                        threshold_2 = 1)    # input the threshold for plus/minus two or more AQI categories
+                        threshold_1 = 5,    # input the threshold for plus/minus one AQI category (default is 5)
+                        threshold_2 = 1)    # input the threshold for plus/minus two or more AQI categories (default is 1)
 
 # ----- create AQI categories bar plot grid ------------------------------------
 
 # check the max AQI category reported by AirNow to determine use of 
 # create_categories_barplot_'whatever the max AQI category is'
 
-# for example, if the max AQI category was unhealthy
-create_categories_barplot_unhealthy(AQI_unlisted = AQI_unlisted,
-                                    threshold_1 = 30,     # input the threshold for plus/minus one AQI category
-                                    threshold_2 = 1)     # input the threshold for plus/minus two or more AQI categories
+create_plots_by_category(AQI_unlisted = AQI_unlisted,
+                         num_plots = max(AQI_unlisted$airnow), # determine the maximum AQI category reported by AirNow
+                         threshold_1 = 30, # input the threshold for plus/minus one AQI category (default is 30)
+                         threshold_2 = 1)  # input the threshold for plus/minus two or more AQI categories (default is 1)

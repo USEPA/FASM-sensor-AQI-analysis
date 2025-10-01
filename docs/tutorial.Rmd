@@ -18,10 +18,10 @@ if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
 library(here)
 
 # Source requirements to load necessary packages and configurations
-source(here("testing/testing_requirements.R"))  # Ensure that the current working directory or the project root is set to FASM-sensor-AQI-analysis
+source(here("R/package_requirements.R"))  # Ensure the working directory or the project root is set to FASM-sensor-AQI-analysis
 
 # Load utility functions from 'functions_for_AQI_barplots.R'
-source(here("testing/testing_functions_for_AQI_barplots.R"))  # Ensure that the current working directory or the project root is set to FASM-sensor-AQI-analysis
+source(here("R/functions_for_AQI_barplots.R"))  # Ensure the working directory or the project root is set to FASM-sensor-AQI-analysis
 ```
 
 
@@ -102,13 +102,17 @@ airnow <- monitor_load(
 )
 ```
 
-Data might need to be trimmed slightly for timestamps to match. In this example, the sensor data is missing the first two hours at the beginning of the time frame of interest, so the AirNow data will be trimmed slightly to match. 
+Data might need to be trimmed slightly for start and end timestamps to match. Find the overlapping time period between the sensor data and the AirNow data and filter both to match the overlapping periods.
 
 ```{r time stamp trim, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
-# trim AirNow data to match sensor data time stamps
-airnow$data <- airnow$data[-c(1:2),]
-sensor$data <- sensor$data[-c(2951:2998),]
+# Find a common start and end datetime stamp between the AirNow and sensor data
+aligned_startdate <- max(min(airnow$data$datetime), min(sensor$data$datetime))
+aligned_enddate <- min(max(airnow$data$datetime), max(sensor$data$datetime))
+
+# Filter the data to the overlapping datetime stamps
+airnow$data <- airnow$data[airnow$data$datetime >= aligned_startdate & airnow$data$datetime <= aligned_enddate, ]
+sensor$data <- sensor$data[sensor$data$datetime >= aligned_startdate & sensor$data$datetime <= aligned_enddate, ]
 ```
 
 
@@ -190,6 +194,6 @@ create_plots_by_category(AQI_unlisted = AQI_unlisted,
                          num_plots = max(AQI_unlisted$airnow), # determine the maximum AQI category reported by AirNow
                          threshold_1 = 30, # input the threshold for plus/minus one AQI category
                          threshold_2 = 1)  # input the threshold for plus/minus two or more AQI categories
-# with this example data, the max AQI category from the reference monitors was Unhealthy (4)
+
 ```
 
