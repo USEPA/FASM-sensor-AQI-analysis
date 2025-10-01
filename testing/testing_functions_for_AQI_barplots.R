@@ -70,12 +70,12 @@ findAdjacentPairs <- function(
 #' This function calculates Air Quality Index (AQI) categories as a numeric value for each hour of paired 
 #' PM2.5 concentration data from sensor / AirNow monitor pairs that are adjacent. It combines data from 
 #' both sources, computes numeric AQI categories based on hourly PM2.5 concentrations, and returns a data 
-#' frame with numeric AQI values for AirNow and sensor data, unlisted and combined as two columns.
+#' frame with numeric AQI category values for AirNow and sensor data, unlisted and combined as two columns.
 #'
 #' @param sensor_adjacent A `mts_monitor` object containing metadata and data for sensors that are adjacent to AirNow monitors.
 #' @param airnow_adjacent A `mts_monitor` object containing metadata and data for AirNow monitors that are adjacent to sensors.
 #'
-#' @return A data frame containing unlisted hourly paired AQI values for adjacent AirNow monitors and sensors.
+#' @return A data frame containing unlisted hourly paired numerical AQI category values for adjacent AirNow monitors and sensors.
 #'
 #' @examples
 #' # Example usage:

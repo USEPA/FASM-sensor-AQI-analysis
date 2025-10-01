@@ -13,35 +13,15 @@ This makes sure the necessary packages are installed and loaded and that the fun
 
 ```{r setup, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
-# Load necessary packages
-if(!require("MazamaCoreUtils"))
-  install.packages("MazamaCoreUtils")
-if(!require("dplyr"))
-  install.packages("dplyr")
-if(!require("AirMonitor"))
-  install.packages("AirMonitor")
-if(!require("AirMonitorPlots"))
-  devtools::install_github('mazamascience/AirMonitorPlots', build_vignettes=TRUE)
-if(!require("tidyverse"))
-  install.packages("tidyverse")
-if(!require("AirSensor2"))
-  devtools::install_github('mazamascience/AirSensor2')
-if(!require("ggpubr"))
-  install.packages("ggpubr")
-if(!require("here"))
-  install.packages("here")
-
-library(MazamaCoreUtils)
-library(dplyr)
-library(AirMonitor)
-library(AirMonitorPlots)
-library(tidyverse)
-library(AirSensor2)
-library(ggpubr)
+# Ensure 'here' package is installed
+if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
 library(here)
 
+# Source requirements to load necessary packages and configurations
+source(here("testing/testing_requirements.R"))
+
 # Load utility functions from 'functions_for_AQI_barplots.R'
-source(here("R", "functions_for_AQI_barplots.R"))  # input the file path to 'functions_for_AQI_barplots.R'
+source(here("testing/testing_functions_for_AQI_barplots.R"))  # input the file path to 'functions_for_AQI_barplots.R'
 ```
 
 
@@ -111,8 +91,8 @@ Data from AirNow can easily be loaded in for specific windows of time using the 
 ```{r AirNow data, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 # Load in AirNow data 
 airnow <- monitor_load(
-  startdate = 20200101,            # input start and end date to match sensor data 
-  enddate = 20201231               # format example: startdate = 20210601
+  startdate = 20190101,            # input start and end date to match sensor data 
+  enddate = 20191231               # format example: startdate = 20210601
   )
 ```
 
@@ -121,12 +101,12 @@ Data might need to be trimmed slightly for timestamps to match. In this example,
 ```{r time stamp trim, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 # trim sensor data and AirNow data for start and end time stamps to match
 sensor$data <- sensor$data %>%
-  filter(datetime > "2020-01-01 00:00:00") %>%
-  filter(datetime < "2020-12-31 23:00:00")
+  filter(datetime > "2019-01-01 00:00:00") %>%
+  filter(datetime < "2019-12-31 23:00:00")
 
-airnow$data <- airnow$data[-c(1:6),]
+airnow$data <- airnow$data[-c(1:1077),]
 
-sensor$data <- sensor$data[-c(8731:8782),]
+sensor$data <- sensor$data[-c(6528:6579),]
 ```
 
 
@@ -199,8 +179,9 @@ There are a series of functions for making AQI category agreement bar plot grids
 
 ```{r bar plot grid, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
 # with this example data, the max AQI category from the reference monitors was Hazardous (6)
-create_categories_barplot_hazardous(AQI_unlisted = AQI_unlisted,
-                                    threshold_1 = 30, # input the threshold for plus/minus one AQI category
-                                    threshold_2 = 1)  # input the threshold for plus/minus two or more AQI categories
+create_plots_by_category(AQI_unlisted = AQI_unlisted,
+                         num_plots = max(AQI_unlisted$airnow),
+                         threshold_1 = 30, # input the threshold for plus/minus one AQI category
+                         threshold_2 = 1)  # input the threshold for plus/minus two or more AQI categories
 ```
 
