@@ -16,9 +16,9 @@ FASM-sensor-AQI-analysis
 The working directory for all scripts and R Markdown documents will be
 `FASM-sensor-AQI-analysis/`.
 
-The `docs/` directory contains the Rmd and html files the are the tutorial walking through the template script. They are linked to the GitHub pages website for this repository.
+The `docs/` directory contains the Rmd and html files the are the tutorial walking through the template script. They are linked to the GitHub pages website for this repository (https://urban-bassoon-v9zkyqw.pages.github.io/).
 
-The `R/` directory contains the template R script for users to fill in and run the code to perform the analysis as well as supporting source R scripts with necessary functions.
+The `R/` directory contains the template R script for users to fill in and run the code to perform the analysis as well as supporting source R scripts with necessary functions and packages.
 
 The `data/` directory contains example sensor data sets and is where users should save their own sensor data to perform the analysis.
 
@@ -33,7 +33,12 @@ Before you begin, ensure you have the following installed:
 * **R**
 * **RStudio**
 * **Git**
+
+For instructions and tips to install R and RStudio, try https://www.sthda.com/english/wiki/installing-r-and-rstudio-easy-r-programming.
+For instructions and tips to install and setup Git, try https://git-scm.com/book/en/v2/Getting-Started-Installing-Git 
 ### Cloning the Repository to RStudio
+
+Cloning a repository means creating a local copy of a remote project on your computer. You download the entire project (all files, folders, etc.) from GitHub to R and RStudio on your computer. Cloning automatically sets up a connection between the new local repository on your computer and the original remote repository on GitHub. It allows you to sync your work by "pulling" any updates made to the origin to your local repository. This repository will not accept users "pushing" changes from their local copy to the original repository. 
 
 1.  **On GitHub:**
     *   Navigate to this repository's main page.
@@ -48,14 +53,12 @@ Before you begin, ensure you have the following installed:
     *   RStudio will automatically suggest a "Project directory name". You can accept this or change it if needed.
     *   Choose a location on your computer to save the project by clicking **Browse**.
     *   Click **Create Project**.
-
-Once the repository is cloned, you can follow the example laid out in (link). Then add your own sensor data to create your own AQI category agreement barplots (see sensor data considerations requirements). Should this example and these functions not work exactly for you, feel free to take the code as inspiration for generating these plots in a way that works best for you. 
 ### Requirements for Sensor Data
 
-The sensor data must consist of two files (.csv or .xlsx format), one of meta data and one of time series data that will be combined into a *mts_monitor* object for analysis. To read more about the *mts_monitor* data format, see https://mazamascience.github.io/MazamaTimeSeries/ . 
-#### Sensor Meta Data
+The sensor data must consist of two files (.csv or .xlsx format), one of metadata and one of time series data that will be combined into a *mts_monitor* object for analysis. To read more about the *mts_monitor* data format, see https://mazamascience.github.io/MazamaTimeSeries/ . 
+#### Sensor Metadata
 
-The meta data file must have each row as a unique device and columns of device meta data.
+The metadata file must have each row as a unique device and columns of device metadata.
 * Required columns must include (written and titled **exactly** as below):
    *  *deviceDeploymentID*
    *  *deviceID*
@@ -71,19 +74,19 @@ The meta data file must have each row as a unique device and columns of device m
 * All columns are of class character except *longitude*, *latutide*, and *elevation* which are of class numeric.
 * The *elevation* and *timezone* columns must exist for functions to run, but aren't required to be populated (can be left blank).
 * *deviceDeploymentID*, *deviceID*, and *locationID* are character identifiers for the sensors. *locationID* is typically generated from the latitude/longitude data, *deviceID* is an identification for the sensor, and *deviceDeploymentID* is a combination of the *locationID* and *deviceID*.
-* Any additional meta data columns beyond those listed above can be included.
-#### Sensor Time Series Data
+* Any additional metadata columns beyond those listed above can be included.
+#### Sensor Time-series Data
 
-The time series data file must have each row as an hourly **UTC** timestamp (with date and time) and columns of the measured parameter for each device, plus the first column for the timestamps.
+The time-series data file must have each row as an hourly **UTC** timestamp (with date and time) and columns of the measured parameter for each device, plus the first column for the timestamps.
 * The column titles must be:
    * *datetime*
    * the *deviceDeploymentID* used in the meta data
 
-**IMPORTANT**: The order of the *deviceDeploymentID* down the rows of the meta data must match the order of the *deviceDeploymentID* across the columns of the time series data after the datetime column.
-* For example, if sensor123abc is the first row in the meta data, then sensor123abc must also be the second column in the time series data after the datetime column. If sensor456def is the second row in the meta data, then sensor456def must also be the third column in the time series data after the datetime column and the first sensor.
-### Generate Bar Plots
+**IMPORTANT**: The order of the *deviceDeploymentID* down the rows of the metadata must match the order of the *deviceDeploymentID* across the columns of the time-series data after the datetime column.
+* For example, if sensor123abc is the first row in the metadata, then sensor123abc must also be the second column in the time-series data after the datetime column. If sensor456def is the second row in the metadata, then sensor456def must also be the third column in the time-series data after the datetime column and the first sensor.
+### The AQI Category Agreement Analysis
 
-Once the sensor data is in the appropriate format as described above, you can use the code in this repository to make your own AQI category agreement barplots. Add your meta data and time series data files to the data folder of this repository to begin walking through the template. You can follow the example laid out in (link), which also shows using example sensor data. Should this example and these functions not work exactly for you, feel free to take the code as inspiration for generating these plots in a way that works best for you. 
+Once the sensor data is in the appropriate format as described above and your code environment is appropriately configured, you can use the code in this repository to make your own AQI category agreement barplots. Add your metadata and time-series data files to the `data` folder of this repository and begin walking through the template. You can follow the example laid out in ([link](https://urban-bassoon-v9zkyqw.pages.github.io/tutorial.html)), which also shows using example sensor data. 
 ## Contact
 
 Please direct inquiries to:
