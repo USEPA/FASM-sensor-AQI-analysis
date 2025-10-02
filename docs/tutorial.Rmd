@@ -1,15 +1,15 @@
 ---
 title: "AQI Category Agreement Analysis Tutorial"
-author: Elizabeth Good
-date: July 16, 2025
+author:
+date: 
 output: html_document
 ---
 
-This tutorial walks through the `template_for_sensor_vs_monitor.R` script to describe the steps and functions used to generate the AQI category agreement barplots used as part of the evaluations for new sensors seeking to be displayed on the AirNow Fire and Smoke Map.
+This tutorial walks through the *'template_for_sensor_vs_monitor.R'* script located in the `FASM-sensor-AQI-analysis/R` folder using example air sensor data. It describe the steps and functions used to generate the AQI category agreement bar plots used as part of the evaluations for new sensors seeking to be displayed on the AirNow Fire and Smoke Map.
 
 
 # Set Up
-This makes sure the necessary packages are installed and loaded and that the functions are called in from their source script *'functions_for_AQI_barplots.R'*. Note that this Rmd uses the `here` package to work with paths in this repository. The `here` package constructs paths relative to the project root. Ensure that the current working directory or the project root is set to `FASM-sensor-AQI-analysis`.
+This makes sure the necessary packages are installed and loaded and that the functions are called in from their source script *'functions_for_AQI_barplots.R'*. Note that this Rmd and the template script use the `here` package to work with file paths in this repository. The `here` package constructs paths relative to the project root. Ensure that the current working directory or the project root is set to `FASM-sensor-AQI-analysis`. This can be done in the Files tab of the Files/Plots/Packages/Help pane of RStudio. Navigate to the `FASM-sensor-AQI-analysis` directory. Click **More > Set As Working Directory**. The `setwd()` function can also be used to set the working directory. 
 
 ```{r setup, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
@@ -33,15 +33,14 @@ Next, load in your sensor data and use it to create the *mts_monitor* object tha
 
 ```{r data load, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
-# Ensure your metadata and time series data csv files are saved in the data 
-# folder of the repository (where some examples are already located)
+# Ensure your metadata and time-series data files are saved in the data folder of the repository (where some examples are already located)
 
 # Load in sensor data (recommend using 'read_csv' rather than 'read.csv')
 meta_df <- read_csv(here("data/clarity_meta.csv")) 
-# input meta data file name from data folder ("clarity_meta.csv" in this example)
+# input metadata file name from data folder ("clarity_meta.csv" in this example)
   
 data_df <- read_csv(here("data/clarity_data.csv")) 
-# input time series data file name from data folder ("clarity_data.csv" in this example)
+# input time-series data file name from data folder ("clarity_data.csv" in this example)
   
 # Create mts_monitor object 
 sensor <- list(meta = meta_df, 
@@ -54,12 +53,12 @@ sensor <- structure(sensor,
 
 ## Important Requirements for Sensor Data
 
-The sensor data must consist of two files (.csv or .xlsx format), one of meta data and one of time series data that will be combined into a *mts_monitor* object for analysis. To read more about the *mts_monitor* data format, see https://mazamascience.github.io/MazamaTimeSeries/ . 
+The sensor data must consist of two files (.csv or .xlsx format), one of metadata and one of time-series data that will be combined into a *mts_monitor* object for analysis. To read more about the *mts_monitor* data format, see https://mazamascience.github.io/MazamaTimeSeries/. 
 
 
-### Sensor Meta Data
+### Sensor Metadata
 
-The meta data file must have each row as a unique device and columns of device meta data.
+The metadata file must have each row as a unique device and columns of device metadata.
 
 * Required columns must include (written and titled **exactly** as below):
    *  *deviceDeploymentID*
@@ -73,28 +72,28 @@ The meta data file must have each row as a unique device and columns of device m
    *  *stateCode*
    *  *countyName*
    *  *timezone*
-* All columns are of class character except *longitude*, *latutide*, and *elevation* which are of class numeric.
+* All columns are of class character except *longitude*, *latitude*, and *elevation* which are of class numeric.
 * The *elevation* and *timezone* columns must exist for functions to run, but aren't required to be populated (can be left blank).
 * *deviceDeploymentID*, *deviceID*, and *locationID* are character identifiers for the sensors. *locationID* is typically generated from the latitude/longitude data, *deviceID* is an identification for the sensor, and *deviceDeploymentID* is a combination of the *locationID* and *deviceID*.
-* Any additional meta data columns beyond those listed above can be included.
+* Any additional metadata columns beyond those listed above can be included.
 
 
-### Sensor Time Series Data
+### Sensor Time-series Data
 
-The time series data file must have each row as an hourly **UTC** timestamp (with date and time) and columns of the measured parameter for each device, plus the first column for the timestamps.
+The time-series data file must have each row as an hourly **UTC** timestamp (with date and time) and columns of the measured parameter for each device, plus the first column for the timestamps.
 
 * The column titles must be:
    * *datetime*
-   * the *deviceDeploymentID* used in the meta data
+   * the *deviceDeploymentID* used in the metadata
 
-**IMPORTANT**: The order of the *deviceDeploymentID* down the rows of the meta data must match the order of the *deviceDeploymentID* across the columns of the time series data after the datetime column.
+**IMPORTANT**: The order of the *deviceDeploymentID* down the rows of the metadata must match the order of the *deviceDeploymentID* across the columns of the time-series data after the datetime column.
 
-* For example, if sensor123abc is the first row in the meta data, then sensor123abc must also be the second column in the time series data after the datetime column. If sensor456def is the second row in the meta data, then sensor456def must also be the third column in the time series data after the datetime column and the first sensor.
+* For example, if sensor123abc is the first row in the metadata, then sensor123abc must also be the second column in the time-series data after the datetime column. If sensor456def is the second row in the metadata, then sensor456def must also be the third column in the time-series data after the datetime column and the first sensor.
 
 
 # Reference AirNow Data
 
-Data from AirNow can easily be loaded in for specific windows of time using the `monitor_load` function from the `AirMonitor` package, and loads in with **UTC** time stamps. Choose a start and end date to match your sensor data; any missing data within the start and end dates are irrelevant. Note that this could take a few minutes to load depending on how much data you're trying to load. 
+Data from AirNow can easily be loaded in for specific windows of time using the `monitor_load` function from the `AirMonitor` package, and loads in with **UTC** time stamps. Code is provided to select a start and end date to match your sensor data; any missing data within the start and end dates are irrelevant. Note that this could take a few minutes depending on how much data you're trying to load. 
 
 ```{r AirNow data, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
@@ -104,12 +103,12 @@ enddate <- format(as.Date(max(sensor$data$datetime)), "%Y%m%d")
 
 # Load in AirNow data for the specified date range
 airnow <- monitor_load(
-  startdate = startdate,            # input start and end date to match sensor data 
-  enddate = enddate                 # format example if input manually: startdate = 20210601
+  startdate = startdate,  # input start and end date to match sensor data 
+  enddate = enddate       # format example if input manually: startdate = 20210601
 )
 ```
 
-Data might need to be trimmed slightly for start and end timestamps to match. Find the overlapping time period between the sensor data and the AirNow data and filter both to match the overlapping periods.
+Data might need to be trimmed slightly for start and end timestamps to match. Code is provided to find the overlapping time period between the sensor data and the AirNow data and filter both to match the overlapping periods.
 
 ```{r time stamp trim, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
@@ -125,7 +124,7 @@ sensor$data <- sensor$data[sensor$data$datetime >= aligned_startdate & sensor$da
 
 # Find Adjacent Pairs
 
-Now that data is loaded, you can use the `findAdjacentPairs` function to find sensors that are within a specified radius of nearby AirNow monitors. The proposed radius for analysis is 1000 meters, but this can be easily adjusted in the `findAdjacentPairs` function to test any radius in meters. This function adds two columns to the sensor meta data: the *airnow_closestDistance* and the *airnow_id* to identify the nearest AirNow monitor to the sensor within the specified radius. The following warning may appear when this function is used and can be ignored: "number of items to replace is not a multiple of replacement length." The AirNow data is then filtered to retain the monitors identified as nearby the sensors, and the PM2.5 NowCast algorithm is applied to be most representative of how data is displayed on the Fire and Smoke map. To read more about the function and the NowCast algorithm, see https://mazamascience.github.io/AirMonitor/articles/NowCast.html.
+Now that data is loaded, you can use the `findAdjacentPairs` function to find sensors that are within a specified radius of nearby AirNow monitors. The proposed radius for analysis is 1000 meters, but this can be easily adjusted in the `findAdjacentPairs` function to find nearby sensor/monitor pairs within any desired radius in meters. This function adds two columns to the sensor metadata: the *airnow_closestDistance* and the *airnow_id* to identify the nearest AirNow monitor to the sensor within the specified radius. The following warning may appear when this function is used and can be ignored: "number of items to replace is not a multiple of replacement length." The AirNow data is then filtered to retain the monitors identified as nearby the sensors, and the PM2.5 NowCast algorithm is applied to be most representative of how data are displayed on the Fire and Smoke map. To read more about the `monitor_nowcast` function and the NowCast algorithm, see https://mazamascience.github.io/AirMonitor/articles/NowCast.html and https://www.epa.gov/sites/default/files/2018-01/documents/nowcastfactsheet.pdf.
 
 ```{r findAdjacentPairs, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
@@ -176,13 +175,13 @@ AQI_unlisted <- create_AQI_unlisted(sensor_adjacent = sensor_adjacent,
 
 # Overall AQI Category Agreement Bar Plot
 
-The `create_combined_barplot` function accepts the `AQI_unlisted` data frame and returns a bar plot comparing AQI category agreement between the sensors and AirNow monitors across all AQI categories combined. You can specify horizontal lines where thresholds for agreement can be visualized. Thresholds can be shown for plus/minus one AQI category and plus/minus two or more AQI categories. Currently, the proposed thresholds for plus/minus one AQI category is no more than **5%** of the time and plus/minus two or more AQI categories no more than **1%** of the time.
+The `create_combined_barplot` function accepts the `AQI_unlisted` data frame and returns a bar plot comparing AQI category agreement between the sensors and AirNow monitors across all AQI categories combined. You can specify the position of horizontal dashed lines where thresholds for agreement can be visualized. Thresholds can be shown for plus/minus one AQI category and plus/minus two or more AQI categories. Currently, the proposed thresholds for plus/minus one AQI category is no more than **5%** of the time and plus/minus two or more AQI categories no more than **1%** of the time.
 
 ```{r combined bar plot, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
 
 create_combined_barplot(AQI_unlisted = AQI_unlisted,
-                        threshold_1 = 5, # input the threshold for plus/minus one AQI category (default is 5)
-                        threshold_2 = 1) # input the threshold for plus/minus two or more AQI categories (default is 1)
+                        threshold_1 = 5, # input the threshold for plus/minus one AQI category
+                        threshold_2 = 1) # input the threshold for plus/minus two or more AQI categories 
 
 
 ```
@@ -190,17 +189,18 @@ create_combined_barplot(AQI_unlisted = AQI_unlisted,
 
 # AQI Category Agreement Bar Plot Grid
 
-There are a series of functions for making AQI category agreement bar plot grids depending on the highest AQI category reached by your reference monitor data. They are all named beginning with `create_categories_barplot_[AQI Category]`. These functions create a bar plot grid showing AQI category agreement by sensors compared to AirNow monitors for each AQI category reported by the reference monitors. Choose the function based on the highest AQI category reported by your reference monitor data. For example, if your reference monitor data reaches the Very Unhealthy category (represented by the number 5 in the `AQI_unlisted` data frame) you would use the `create_categories_barplot_veryunhealthy` function. As above, thresholds can be shown for plus/minus one AQI category and plus/minus two or more AQI categories. Currently, the proposed threshold for plus/minus one AQI category is no more than **30%** of the time and plus/minus two or more AQI categories no more than **1%** of the time within each AQI category reported by the reference monitors.
+The `create_plots_by_category` function accepts the `AQI_unlisted` data frame and returns a figure that shows AQI category agreement by AQI category reported by the reference monitor data. For example, when AirNow monitors are reporting Moderate, what AQI categories are reported by nearby sensors? This function must also be told the number of plots to show via the `num_plots` variable, which is based on the maximum AQI category reported by the AirNow monitor reference data. For example, if your AirNow monitor reference data reaches the Unhealthy AQI category, four bar plots will be arranged in the figure. Code is provided to determine how many plots should be arranged in the figure. As above, thresholds can be shown for plus/minus one AQI category and plus/minus two or more AQI categories. Currently, the proposed threshold for plus/minus one AQI category is no more than **30%** of the time and plus/minus two or more AQI categories no more than **1%** of the time within each AQI category reported by the reference monitors.
 
 ```{r bar plot grid, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
 
-# Generate a bar plot grid showing AQI category agreement; choose function based on max AQI category
-# with this example data, the max AQI category from the reference monitors was Unhealthy (4)
-
+# With this example Clarity data, the max AQI category from reference monitors is Unhealthy, so four bar plots are displayed
 create_plots_by_category(AQI_unlisted = AQI_unlisted,
-                         num_plots = max(AQI_unlisted$airnow), # determine the maximum AQI category reported by AirNow
-                         threshold_1 = 30, # input the threshold for plus/minus one AQI category (default is 30)
-                         threshold_2 = 1)  # input the threshold for plus/minus two or more AQI categories (default is 1)
-
+                         num_plots = max(AQI_unlisted$airnow), 
+                         # determine the maximum AQI category reported by AirNow
+                         threshold_1 = 30, 
+                         # input the threshold for plus/minus one AQI category (default is 30)
+                         threshold_2 = 1 
+                         # input the threshold for plus/minus two or more AQI categories (default is 1)
+                         )
 ```
 

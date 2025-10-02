@@ -22,15 +22,15 @@ source(here("R/functions_for_AQI_barplots.R"))
 
 # ----- sensor data prep -------------------------------------------------------
 
-# Ensure your metadata and time series data csv files are saved in the data 
+# Ensure your metadata and time-series data files are saved in the data 
 # folder of the repository (where some examples are already located)
 
 # Load in sensor data (recommend using 'read_csv' rather than 'read.csv')
 meta_df <- read_csv(here("data/YOUR_METADATA.csv")) 
-# replace YOUR_METADATA with the meta data file name in data folder 
+# replace YOUR_METADATA with the metadata file name in data folder 
 
 data_df <- read_csv(here("data/YOUR_DATA.csv")) 
-# replace YOUR_DATA with time series data file name in data folder 
+# replace YOUR_DATA with time-series data file name in data folder 
 
 # Create mts_monitor object 
 sensor <- list(meta = meta_df, 
