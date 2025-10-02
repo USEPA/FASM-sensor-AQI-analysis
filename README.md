@@ -80,7 +80,7 @@ The metadata file must have each row as a unique device and columns of device me
 The time-series data file must have each row as an hourly **UTC** timestamp (with date and time) and columns of the measured parameter for each device, plus the first column for the timestamps.
 * The column titles must be:
    * *datetime*
-   * the *deviceDeploymentID* used in the meta data
+   * the *deviceDeploymentID* used in the metadata
 
 **IMPORTANT**: The order of the *deviceDeploymentID* down the rows of the metadata must match the order of the *deviceDeploymentID* across the columns of the time-series data after the datetime column.
 * For example, if sensor123abc is the first row in the metadata, then sensor123abc must also be the second column in the time-series data after the datetime column. If sensor456def is the second row in the metadata, then sensor456def must also be the third column in the time-series data after the datetime column and the first sensor.
@@ -95,6 +95,8 @@ Elizabeth Good, Physical Scientist<br>U.S. EPA, Office of Air Quality Planning a
 ## References and Acknowledgements 
 
 This code relys on functions from packages by Jon Callahan. Visit [Mazama Science](https://github.com/MazamaScience) on GitHub to read package documentation.
+
+Thank you to Clarity Movement Co. (EPA MTA 1643-25, FS MTA 25-RD-11132543-061) and PurpleAir (MTA #1361-19) for providing example data via the cited Material Transfer Agreements. Clarity and PurpleAir are two sensor manufacturers currently displayd on the Fire and Smoke Map.
 ## Disclaimer
 
 The United States Environmental Protection Agency (EPA) GitHub project code is provided on an "as is" basis and the user assumes responsibility for its use. EPA has relinquished control of the information and no longer has responsibility to protect the integrity, confidentiality, or availability of the information. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by EPA. The EPA seal and logo shall not be used in any manner to imply endorsement of any commercial product or activity by EPA or the United States Government. 
