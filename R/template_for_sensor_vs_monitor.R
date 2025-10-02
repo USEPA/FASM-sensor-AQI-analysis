@@ -61,21 +61,21 @@ sensor$data <- sensor$data[sensor$data$datetime >= aligned_startdate & sensor$da
 
 # ----- find adjacent pairs ----------------------------------------------------
 
-# returns mts_monitor object of sensors
+# Returns mts_monitor object of sensors
 sensor_adjacent <- findAdjacentPairs(sensor = sensor, 
                                      airnow = airnow, 
                                      1000)    # specify the radius in meters
 
-# call out the ids of the adjacent pairs
+# Call out the ids of the adjacent pairs
 airnow_ids <- unique(sensor_adjacent$meta$airnow_id)
 sensor_ids <- unique(sensor_adjacent$meta$deviceDeploymentID)
 
-# filter the airnow data set for adjacent pairs 
+# Filter the airnow data set for adjacent pairs 
 airnow_adjacent <-
   airnow %>%
   monitor_select(airnow_ids)
 
-# apply the NowCast algorithm 
+# Apply the NowCast algorithm 
 sensor_adjacent <- 
   sensor_adjacent %>%
   monitor_nowcast(includeShortTerm = TRUE)

@@ -18,10 +18,12 @@ if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
 library(here)
 
 # Source requirements to load necessary packages and configurations
-source(here("R/package_requirements.R"))  # Ensure the working directory or the project root is set to FASM-sensor-AQI-analysis
+source(here("R/package_requirements.R"))  
+# Ensure the working directory or the project root is set to FASM-sensor-AQI-analysis
 
 # Load utility functions from 'functions_for_AQI_barplots.R'
-source(here("R/functions_for_AQI_barplots.R"))  # Ensure the working directory or the project root is set to FASM-sensor-AQI-analysis
+source(here("R/functions_for_AQI_barplots.R"))  
+# Ensure the working directory or the project root is set to FASM-sensor-AQI-analysis
 ```
 
 
@@ -31,10 +33,15 @@ Next, load in your sensor data and use it to create the *mts_monitor* object tha
 
 ```{r data load, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
-# Load in sensor data 
-meta_df <- read_csv(here("data", "clarity_meta.csv")) # input file path to meta data (recommend using 'read_csv' rather than 'read.csv')
+# Ensure your metadata and time series data csv files are saved in the data 
+# folder of the repository (where some examples are already located)
+
+# Load in sensor data (recommend using 'read_csv' rather than 'read.csv')
+meta_df <- read_csv(here("data/clarity_meta.csv")) 
+# input meta data file name from data folder ("clarity_meta.csv" in this example)
   
-data_df <- read_csv(here("data", "clarity_data.csv")) # input file path to time series data (recommend using 'read_csv' rather than 'read.csv')
+data_df <- read_csv(here("data/clarity_data.csv")) 
+# input time series data file name from data folder ("clarity_data.csv" in this example)
   
 # Create mts_monitor object 
 sensor <- list(meta = meta_df, 
@@ -122,21 +129,21 @@ Now that data is loaded, you can use the `findAdjacentPairs` function to find se
 
 ```{r findAdjacentPairs, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
-# returns mts_monitor object of sensors within specified radius of reference monitors
+# Returns mts_monitor object of sensors within specified radius of reference monitors
 sensor_adjacent <- findAdjacentPairs(sensor = sensor, 
                                      airnow = airnow, 
                                      1000)    # specify the radius in meters
 
-# call out the ids of the adjacent pairs
+# Call out the ids of the adjacent pairs
 airnow_ids <- unique(sensor_adjacent$meta$airnow_id)
 sensor_ids <- unique(sensor_adjacent$meta$deviceDeploymentID)
 
-# filter the airnow data set for adjacent pairs 
+# Filter the airnow data set for adjacent pairs 
 airnow_adjacent <-
   airnow %>%
   monitor_select(airnow_ids)
 
-# apply the NowCast algorithm 
+# Apply the NowCast algorithm 
 sensor_adjacent <- 
   sensor_adjacent %>%
   monitor_nowcast(includeShortTerm = TRUE)
@@ -174,8 +181,8 @@ The `create_combined_barplot` function accepts the `AQI_unlisted` data frame and
 ```{r combined bar plot, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
 
 create_combined_barplot(AQI_unlisted = AQI_unlisted,
-                        threshold_1 = 5, # input the threshold for plus/minus one AQI category
-                        threshold_2 = 1) # input the threshold for plus/minus two or more AQI categories
+                        threshold_1 = 5, # input the threshold for plus/minus one AQI category (default is 5)
+                        threshold_2 = 1) # input the threshold for plus/minus two or more AQI categories (default is 1)
 
 
 ```
@@ -192,8 +199,8 @@ There are a series of functions for making AQI category agreement bar plot grids
 
 create_plots_by_category(AQI_unlisted = AQI_unlisted,
                          num_plots = max(AQI_unlisted$airnow), # determine the maximum AQI category reported by AirNow
-                         threshold_1 = 30, # input the threshold for plus/minus one AQI category
-                         threshold_2 = 1)  # input the threshold for plus/minus two or more AQI categories
+                         threshold_1 = 30, # input the threshold for plus/minus one AQI category (default is 30)
+                         threshold_2 = 1)  # input the threshold for plus/minus two or more AQI categories (default is 1)
 
 ```
 
