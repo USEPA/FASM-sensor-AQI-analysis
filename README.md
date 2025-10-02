@@ -16,7 +16,7 @@ FASM-sensor-AQI-analysis
 The working directory for all scripts and R Markdown documents will be
 `FASM-sensor-AQI-analysis/`.
 
-The `docs/` directory contains the Rmd and html files the are the tutorial walking through the template script. They are linked to the GitHub pages website for this repository (https://urban-bassoon-v9zkyqw.pages.github.io/).
+The `docs/` directory contains the Rmd and html files the are the tutorial walking through the template script. They are linked to the [GitHub Pages website](https://urban-bassoon-v9zkyqw.pages.github.io/) for this repository.
 
 The `R/` directory contains the template R script for users to fill in and run the code to perform the analysis as well as supporting source R scripts with necessary functions and packages.
 
@@ -55,7 +55,7 @@ Cloning a repository means creating a local copy of a remote project on your com
     *   Click **Create Project**.
 ### Requirements for Sensor Data
 
-The sensor data must consist of two files (.csv or .xlsx format), one of metadata and one of time series data that will be combined into a *mts_monitor* object for analysis. To read more about the *mts_monitor* data format, see the [MazamaTimeSeries](https://mazamascience.github.io/MazamaTimeSeries/) description from Mazama Science.
+The sensor data must consist of two files (.csv or .xlsx format), one of metadata and one of time-series data that will be combined into a *mts_monitor* object for analysis. To read more about the *mts_monitor* data format, see the [MazamaTimeSeries](https://mazamascience.github.io/MazamaTimeSeries/) description from Mazama Science.
 #### Sensor Metadata
 
 The metadata file must have each row as a unique device and columns of device metadata.
@@ -86,7 +86,7 @@ The time-series data file must have each row as an hourly **UTC** timestamp (wit
 * For example, if sensor123abc is the first row in the metadata, then sensor123abc must also be the second column in the time-series data after the datetime column. If sensor456def is the second row in the metadata, then sensor456def must also be the third column in the time-series data after the datetime column and the first sensor.
 ### The AQI Category Agreement Analysis
 
-Once your sensor data is in the appropriate *mts_monitor* format as described above and your code environment is appropriately configured, you can use the scripts in this repository to make your own AQI category agreement bar plots. Add your metadata and time-series data csv files to the `data` folder of this repository and begin walking through the `template_for_sensor_vs_monitor.R` file. You can follow the tutorial laid out in ([link](https://urban-bassoon-v9zkyqw.pages.github.io/tutorial.html)), which includes a narrative of instructions that go with the template file and shows the use of example sensor data. Example sensor data is available for use to follow the tutorial precisely before trying with your own sensor data.
+Once your sensor data is in the appropriate *mts_monitor* format as described above and your code environment is appropriately configured, you can use the scripts in this repository to make your own AQI category agreement bar plots. Add your metadata and time-series data files to the `data` folder of this repository and begin walking through the `template_for_sensor_vs_monitor.R` file. You can follow the tutorial laid out in the [GitHub Pages website](https://urban-bassoon-v9zkyqw.pages.github.io/tutorial.html), which includes a narrative of instructions that go with the template file and shows the use of example sensor data. Example sensor data is available for use to follow the tutorial precisely before trying with your own sensor data.
 ## Contact
 
 Please direct inquiries to:
@@ -94,7 +94,7 @@ Please direct inquiries to:
 Elizabeth Good, Physical Scientist<br>U.S. EPA, Office of Air Quality Planning and Standards<br>Ambient Air Monitoring Group<br>Email: good.elizabeth@epa.gov
 ## References and Acknowledgements 
 
-This code relys on functions from packages by Jon Callahan. Visit [Mazama Science](https://github.com/MazamaScience) on GitHub to read package documentation.
+This code relys on functions from packages by Dr. Jonathan Callahan and Mazama Science. Visit [Mazama Science](https://github.com/MazamaScience) on GitHub to read package documentation.
 
 Thank you to Clarity Movement Co. (EPA MTA 1643-25, FS MTA 25-RD-11132543-061) and PurpleAir (MTA #1361-19) for providing example data via the cited Material Transfer Agreements. Clarity and PurpleAir are two sensor manufacturers currently displayd on the Fire and Smoke Map.
 ## Disclaimer
