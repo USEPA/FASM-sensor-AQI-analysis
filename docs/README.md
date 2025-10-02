@@ -1,3 +1,5 @@
 ## FASM-sensor-AQI-analysis/docs
 
-This folder contains the files that support the tutorial for this repository. These files create a tutorial that walks through the `template_for_sensor_vs_monitor.R` file in the `R` folder. 
+This folder contains the files that support the tutorial for this repository. These files create a tutorial that walks through the `template_for_sensor_vs_monitor.R` file in the `R` folder using the example sensor data from Clarity in the `data` folder. The `tutorial.Rmd` files knits into the `tutorial.html` file that links to the GitHub Pages website https://urban-bassoon-v9zkyqw.pages.github.io/ . The `index.html` file simply directs GitHub Pages to read the `tutorial.html` file for the website. The website has written instructions that accompany the steps taken through the `template_for_sensor_vs_monitor.R` file to generate the figures for the AQI category agreement analysis.
+
+None of the files in this folder require user input. Please visit https://urban-bassoon-v9zkyqw.pages.github.io/ to follow along with the tutorial while working through `template_for_sensor_vs_monitor.R` to complete the analysis.
