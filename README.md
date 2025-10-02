@@ -34,8 +34,8 @@ Before you begin, ensure you have the following installed:
 * **RStudio**
 * **Git**
 
-For instructions and tips to install R and RStudio, try https://www.sthda.com/english/wiki/installing-r-and-rstudio-easy-r-programming.
-For instructions and tips to install and setup Git, try https://git-scm.com/book/en/v2/Getting-Started-Installing-Git 
+Try [this website](https://www.sthda.com/english/wiki/installing-r-and-rstudio-easy-r-programming) for instructions and tips to install R and RStudio.
+Try [this website](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git ) for instructions and tips to install and setup Git. 
 ### Cloning the Repository to RStudio
 
 Cloning a repository means creating a local copy of a remote project on your computer. You download the entire project (all files, folders, etc.) from GitHub to R and RStudio on your computer. Cloning automatically sets up a connection between the new local repository on your computer and the original remote repository on GitHub. It allows you to sync your work by "pulling" any updates made to the origin to your local repository. This repository will not accept users "pushing" changes from their local copy to the original repository. 
@@ -55,7 +55,7 @@ Cloning a repository means creating a local copy of a remote project on your com
     *   Click **Create Project**.
 ### Requirements for Sensor Data
 
-The sensor data must consist of two files (.csv or .xlsx format), one of metadata and one of time series data that will be combined into a *mts_monitor* object for analysis. To read more about the *mts_monitor* data format, see https://mazamascience.github.io/MazamaTimeSeries/ . 
+The sensor data must consist of two files (.csv or .xlsx format), one of metadata and one of time series data that will be combined into a *mts_monitor* object for analysis. To read more about the *mts_monitor* data format, see the [MazamaTimeSeries](https://mazamascience.github.io/MazamaTimeSeries/) description from Mazama Science.
 #### Sensor Metadata
 
 The metadata file must have each row as a unique device and columns of device metadata.
@@ -86,7 +86,7 @@ The time-series data file must have each row as an hourly **UTC** timestamp (wit
 * For example, if sensor123abc is the first row in the metadata, then sensor123abc must also be the second column in the time-series data after the datetime column. If sensor456def is the second row in the metadata, then sensor456def must also be the third column in the time-series data after the datetime column and the first sensor.
 ### The AQI Category Agreement Analysis
 
-Once the sensor data is in the appropriate format as described above and your code environment is appropriately configured, you can use the code in this repository to make your own AQI category agreement barplots. Add your metadata and time-series data files to the `data` folder of this repository and begin walking through the template. You can follow the example laid out in ([link](https://urban-bassoon-v9zkyqw.pages.github.io/tutorial.html)), which also shows using example sensor data. 
+Once your sensor data is in the appropriate *mts_monitor* format as described above and your code environment is appropriately configured, you can use the scripts in this repository to make your own AQI category agreement bar plots. Add your metadata and time-series data csv files to the `data` folder of this repository and begin walking through the `template_for_sensor_vs_monitor.R` file. You can follow the tutorial laid out in ([link](https://urban-bassoon-v9zkyqw.pages.github.io/tutorial.html)), which includes a narrative of instructions that go with the template file and shows the use of example sensor data. Example sensor data is available for use to follow the tutorial precisely before trying with your own sensor data.
 ## Contact
 
 Please direct inquiries to:
@@ -94,7 +94,7 @@ Please direct inquiries to:
 Elizabeth Good, Physical Scientist<br>U.S. EPA, Office of Air Quality Planning and Standards<br>Ambient Air Monitoring Group<br>Email: good.elizabeth@epa.gov
 ## References and Acknowledgements 
 
-This code relys on functions from packages by Jon Callahan. Visit https://github.com/MazamaScience to read package documentation.
+This code relys on functions from packages by Jon Callahan. Visit [Mazama Science](https://github.com/MazamaScience) on GitHub to read package documentation.
 ## Disclaimer
 
 The United States Environmental Protection Agency (EPA) GitHub project code is provided on an "as is" basis and the user assumes responsibility for its use. EPA has relinquished control of the information and no longer has responsibility to protect the integrity, confidentiality, or availability of the information. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by EPA. The EPA seal and logo shall not be used in any manner to imply endorsement of any commercial product or activity by EPA or the United States Government. 
