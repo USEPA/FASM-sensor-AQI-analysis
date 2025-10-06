@@ -225,7 +225,7 @@ create_plots_by_category(AQI_unlisted = AQI_unlisted,
 
 # Example 2: PurpleAir
 
-Below is a streamlined example of the template script with a second sensor manufacturer: PurpleAir. This second example uses public PurpleAir sensor data in the southwest U.S. from August 28, 2024 through October 3, 2024. Thank you to PurpleAir for providing these data via MTA #1261-19.
+Below is an additional, more streamlined example of the template script with a second sensor manufacturer: PurpleAir. This second example uses public PurpleAir sensor data in the southwest U.S. from August 28, 2024 through October 3, 2024. Thank you to PurpleAir for providing these data via MTA #1261-19.
 
 ```{r pa setup, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
