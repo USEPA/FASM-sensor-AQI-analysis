@@ -29,6 +29,19 @@ source(here("R/functions_for_AQI_barplots.R"))
 meta_df <- read_csv(here("data/YOUR_METADATA.csv")) 
 # replace YOUR_METADATA with the metadata file name in data folder 
 
+# Ensure metadata columns are the correct class 
+meta_df$deviceDeploymentID <- as.character(meta_df$deviceDeploymentID)
+meta_df$deviceID <- as.character(meta_df$deviceID)
+meta_df$locationID <- as.character(meta_df$locationID)
+meta_df$locationName <- as.character(meta_df$locationName)
+meta_df$longitude <- as.numeric(meta_df$longitude)
+meta_df$latitude <- as.numeric(meta_df$latitude)
+meta_df$elevation <- as.numeric(meta_df$elevation)
+meta_df$countryCode <- as.character(meta_df$countryCode)
+meta_df$stateCode <- as.character(meta_df$stateCode)
+meta_df$countyName <- as.character(meta_df$countyName)
+meta_df$timezone <- as.character(meta_df$timezone)
+
 data_df <- read_csv(here("data/YOUR_DATA.csv")) 
 # replace YOUR_DATA with time-series data file name in data folder 
 

@@ -5,11 +5,11 @@ date:
 output: html_document
 ---
 
-This tutorial walks through the *'template_for_sensor_vs_monitor.R'* script located in the `FASM-sensor-AQI-analysis/R` folder using example air sensor data. It describe the steps and functions used to generate the AQI category agreement bar plots used as part of the evaluations for new sensors seeking to be displayed on the AirNow Fire and Smoke Map.
+This tutorial walks through the *'template_for_sensor_vs_monitor.R'* script located in the `FASM-sensor-AQI-analysis/R` folder using example air sensor data. It describes the steps and functions used to generate the AQI category agreement bar plots used as part of the evaluations for new sensors seeking to be displayed on the AirNow Fire and Smoke Map.
 
 
 # Set Up
-This makes sure the necessary packages are installed and loaded and that the functions are called in from their source script *'functions_for_AQI_barplots.R'*. Note that this Rmd and the template script use the `here` package to work with file paths in this repository. The `here` package constructs paths relative to the project root. Ensure that the current working directory or the project root is set to `FASM-sensor-AQI-analysis`. This can be done in the Files tab of the Files/Plots/Packages/Help pane of RStudio. Navigate to the `FASM-sensor-AQI-analysis` directory. Click **More > Set As Working Directory**. The `setwd()` function can also be used to set the working directory. 
+This makes sure the necessary packages are installed and loaded and that the functions are called in from their source script *'functions_for_AQI_barplots.R'*. Note that this tutorial and the template script use the `here` package to work with file paths in this repository. The `here` package constructs paths relative to the project root. Ensure that the current working directory or the project root is set to `FASM-sensor-AQI-analysis`. This can be done in the Files tab of the Files/Plots/Packages/Help pane of RStudio. Navigate to the `FASM-sensor-AQI-analysis` directory. Click **More > Set As Working Directory**. The `setwd()` function can also be used to set the working directory. 
 
 ```{r setup, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
@@ -29,15 +29,29 @@ source(here("R/functions_for_AQI_barplots.R"))
 
 # Sensor Data Prep
 
-Next, load in your sensor data and use it to create the *mts_monitor* object that will be used for comparison against the AirNow reference monitors. This Rmd uses some example sensor data, which can also be used to help understand the required data format for your own sensor data. Ensure your data is in **UTC** time; the example data has already been converted to UTC time stamps. 
+Next, load in your sensor data and use it to create the *mts_monitor* object that will be used for comparison against the AirNow reference monitors. This tutorial uses some example sensor data, which can also be used to help understand the required data format for your own sensor data. Ensure your data is in **UTC** time; the example data has already been converted to UTC time stamps. This first example uses nationwide public Clarity Movement Co. sensor data from May 30, 2023 through September 29, 2023. Thank you to Clarity for providing these data via EPA MTA 1643-25 / FS MTA 25-RD-11132543-061.
 
 ```{r data load, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
-# Ensure your metadata and time-series data files are saved in the data folder of the repository (where some examples are already located)
+# Ensure your metadata and time-series data files are saved in the data folder of the repository 
+# (where some examples are already located)
 
 # Load in sensor data (recommend using 'read_csv' rather than 'read.csv')
 meta_df <- read_csv(here("data/clarity_meta.csv")) 
 # input metadata file name from data folder ("clarity_meta.csv" in this example)
+
+# Ensure metadata columns are the correct class 
+meta_df$deviceDeploymentID <- as.character(meta_df$deviceDeploymentID)
+meta_df$deviceID <- as.character(meta_df$deviceID)
+meta_df$locationID <- as.character(meta_df$locationID)
+meta_df$locationName <- as.character(meta_df$locationName)
+meta_df$longitude <- as.numeric(meta_df$longitude)
+meta_df$latitude <- as.numeric(meta_df$latitude)
+meta_df$elevation <- as.numeric(meta_df$elevation)
+meta_df$countryCode <- as.character(meta_df$countryCode)
+meta_df$stateCode <- as.character(meta_df$stateCode)
+meta_df$countyName <- as.character(meta_df$countyName)
+meta_df$timezone <- as.character(meta_df$timezone)
   
 data_df <- read_csv(here("data/clarity_data.csv")) 
 # input time-series data file name from data folder ("clarity_data.csv" in this example)
@@ -124,7 +138,7 @@ sensor$data <- sensor$data[sensor$data$datetime >= aligned_startdate & sensor$da
 
 # Find Adjacent Pairs
 
-Now that data is loaded, you can use the `findAdjacentPairs` function to find sensors that are within a specified radius of nearby AirNow monitors. The proposed radius for analysis is 1000 meters, but this can be easily adjusted in the `findAdjacentPairs` function to find nearby sensor/monitor pairs within any desired radius in meters. This function adds two columns to the sensor metadata: the *airnow_closestDistance* and the *airnow_id* to identify the nearest AirNow monitor to the sensor within the specified radius. The following warning may appear when this function is used and can be ignored: "number of items to replace is not a multiple of replacement length." The AirNow data is then filtered to retain the monitors identified as nearby the sensors, and the PM2.5 NowCast algorithm is applied to be most representative of how data are displayed on the Fire and Smoke map. To read more about the `monitor_nowcast` function and the NowCast algorithm, see https://mazamascience.github.io/AirMonitor/articles/NowCast.html and https://www.epa.gov/sites/default/files/2018-01/documents/nowcastfactsheet.pdf.
+Now that data is loaded, you can use the `findAdjacentPairs` function to find sensors that are within a specified radius of nearby AirNow monitors. The proposed radius for analysis is 1000 meters, but this can be easily adjusted in the `findAdjacentPairs` function to find nearby sensor/monitor pairs within any desired radius in meters. This function adds two columns to the sensor metadata: the *airnow_closestDistance* and the *airnow_id* to identify the nearest AirNow monitor to the sensor within the specified radius. The following warning may appear when this function is used and can be ignored: "number of items to replace is not a multiple of replacement length." The AirNow data is then filtered to retain the monitors identified as nearby the sensors, and the PM2.5 NowCast algorithm is applied so that data are most representative of how they are displayed on the Fire and Smoke map. To read more about the `monitor_nowcast` function and the NowCast algorithm, see https://mazamascience.github.io/AirMonitor/articles/NowCast.html and/or visit https://www.epa.gov/sites/default/files/2018-01/documents/nowcastfactsheet.pdf.
 
 ```{r findAdjacentPairs, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
 
@@ -180,8 +194,11 @@ The `create_combined_barplot` function accepts the `AQI_unlisted` data frame and
 ```{r combined bar plot, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
 
 create_combined_barplot(AQI_unlisted = AQI_unlisted,
-                        threshold_1 = 5, # input the threshold for plus/minus one AQI category
-                        threshold_2 = 1) # input the threshold for plus/minus two or more AQI categories 
+                        threshold_1 = 5, 
+                        # input the threshold for plus/minus one AQI category (default is 5)
+                        threshold_2 = 1
+                        # input the threshold for plus/minus two or more AQI categories (default is 1)
+                        )  
 
 
 ```
@@ -193,7 +210,8 @@ The `create_plots_by_category` function accepts the `AQI_unlisted` data frame an
 
 ```{r bar plot grid, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
 
-# With this example Clarity data, the max AQI category from reference monitors is Unhealthy, so four bar plots are displayed
+# With this example Clarity data, the max AQI category from reference monitors is Unhealthy, 
+# so four bar plots are displayed
 create_plots_by_category(AQI_unlisted = AQI_unlisted,
                          num_plots = max(AQI_unlisted$airnow), 
                          # determine the maximum AQI category reported by AirNow
@@ -204,3 +222,152 @@ create_plots_by_category(AQI_unlisted = AQI_unlisted,
                          )
 ```
 
+
+# Example 2: PurpleAir
+
+Below is a streamlined example of the template script with a second sensor manufacturer: PurpleAir. This second example uses public PurpleAir sensor data in the southwest U.S. from August 28, 2024 through October 3, 2024. Thank you to PurpleAir for providing these data via MTA #1261-19.
+
+```{r pa setup, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
+
+# Ensure 'here' package is installed
+if (!requireNamespace("here", quietly = TRUE)) install.packages("here")
+library(here)
+
+# Source requirements to load necessary packages and configurations
+source(here("R/package_requirements.R"))  
+# Ensure the working directory or the project root is set to FASM-sensor-AQI-analysis
+
+# Load utility functions from 'functions_for_AQI_barplots.R'
+source(here("R/functions_for_AQI_barplots.R"))  
+# Ensure the working directory or the project root is set to FASM-sensor-AQI-analysis
+
+```
+
+
+## Sensor Data Prep
+
+``` {r pa data load, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
+
+# Load in sensor data (recommend using 'read_csv' rather than 'read.csv')
+meta_df <- read_csv(here("data/purpleair_meta.csv")) 
+# input metadata file name from data folder ("purpleair_meta.csv" in this example)
+
+# Ensure metadata columns are the correct class 
+meta_df$deviceDeploymentID <- as.character(meta_df$deviceDeploymentID)
+meta_df$deviceID <- as.character(meta_df$deviceID)
+meta_df$locationID <- as.character(meta_df$locationID)
+meta_df$locationName <- as.character(meta_df$locationName)
+meta_df$longitude <- as.numeric(meta_df$longitude)
+meta_df$latitude <- as.numeric(meta_df$latitude)
+meta_df$elevation <- as.numeric(meta_df$elevation)
+meta_df$countryCode <- as.character(meta_df$countryCode)
+meta_df$stateCode <- as.character(meta_df$stateCode)
+meta_df$countyName <- as.character(meta_df$countyName)
+meta_df$timezone <- as.character(meta_df$timezone)
+  
+data_df <- read_csv(here("data/purpleair_data.csv")) 
+# input time-series data file name from data folder ("purpleair_data.csv" in this example)
+  
+# Create mts_monitor object 
+sensor <- list(meta = meta_df, 
+               data = data_df)
+
+sensor <- structure(sensor, 
+                    class = c("mts_monitor", "mts", class(sensor)))
+
+```
+
+
+## Reference AirNow Data 
+
+```{r pa AirNow data, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
+
+# Extract the start and end date from the sensor data
+startdate <- format(as.Date(min(sensor$data$datetime)), "%Y%m%d")
+enddate <- format(as.Date(max(sensor$data$datetime)), "%Y%m%d")
+
+# Load in AirNow data for the specified date range
+airnow <- monitor_load(
+  startdate = startdate,  # input start and end date to match sensor data 
+  enddate = enddate       # format example if input manually: startdate = 20210601
+)
+
+# Find a common start and end datetime stamp between the AirNow and sensor data
+aligned_startdate <- max(min(airnow$data$datetime), min(sensor$data$datetime))
+aligned_enddate <- min(max(airnow$data$datetime), max(sensor$data$datetime))
+
+# Filter the data to the overlapping datetime stamps
+airnow$data <- airnow$data[airnow$data$datetime >= aligned_startdate & airnow$data$datetime <= aligned_enddate, ]
+sensor$data <- sensor$data[sensor$data$datetime >= aligned_startdate & sensor$data$datetime <= aligned_enddate, ]
+
+```
+
+
+## Find Adjacent Pairs
+
+```{r pa findAdjacentPairs, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
+
+# Returns mts_monitor object of sensors within specified radius of reference monitors
+sensor_adjacent <- findAdjacentPairs(sensor = sensor, 
+                                     airnow = airnow, 
+                                     1000)    # specify the radius in meters
+
+# Call out the ids of the adjacent pairs
+airnow_ids <- unique(sensor_adjacent$meta$airnow_id)
+sensor_ids <- unique(sensor_adjacent$meta$deviceDeploymentID)
+
+# Filter the airnow data set for adjacent pairs 
+airnow_adjacent <-
+  airnow %>%
+  monitor_select(airnow_ids)
+
+# Apply the NowCast algorithm 
+sensor_adjacent <- 
+  sensor_adjacent %>%
+  monitor_nowcast(includeShortTerm = TRUE)
+
+airnow_adjacent <-
+  airnow_adjacent %>%
+  monitor_nowcast(includeShortTerm = TRUE)
+```
+
+
+## Unlisted AQI Category Data Frame 
+
+```{r pa unlisted df, echo = TRUE, results = 'hide', warning = FALSE, message = FALSE}
+
+AQI_unlisted <- create_AQI_unlisted(sensor_adjacent = sensor_adjacent,
+                                    airnow_adjacent = airnow_adjacent)
+```
+
+
+## Overall AQI Category Agreement Bar Plot
+
+```{r pa combined bar plot, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
+
+create_combined_barplot(AQI_unlisted = AQI_unlisted,
+                        threshold_1 = 5, 
+                        # input the threshold for plus/minus one AQI category (default is 5)
+                        threshold_2 = 1
+                        # input the threshold for plus/minus two or more AQI categories (default is 1)
+                        )  
+
+
+```
+
+
+## AQI Category Agreement Bar Plot Grid
+
+```{r pa bar plot grid, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
+
+# With this example PurpleAir data, the max AQI category from reference monitors is Very Unhealthy, 
+# so five bar plots are displayed
+create_plots_by_category(AQI_unlisted = AQI_unlisted,
+                         num_plots = max(AQI_unlisted$airnow), 
+                         # determine the maximum AQI category reported by AirNow
+                         threshold_1 = 30, 
+                         # input the threshold for plus/minus one AQI category (default is 30)
+                         threshold_2 = 1 
+                         # input the threshold for plus/minus two or more AQI categories (default is 1)
+                         )
+```

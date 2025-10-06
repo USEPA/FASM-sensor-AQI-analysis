@@ -180,8 +180,8 @@ create_AQI_unlisted <- function(
 #'
 create_combined_barplot <- function(
     AQI_unlisted,
-    threshold_1,
-    threshold_2
+    threshold_1 = 5,
+    threshold_2 = 1
 ) {
   
   # Calculate the deviation between the sensor and monitor AQI category
@@ -248,8 +248,8 @@ create_combined_barplot <- function(
 create_plots_by_category <- function(
     AQI_unlisted,
     num_plots,
-    threshold_1,
-    threshold_2
+    threshold_1 = 30,
+    threshold_2 = 1
 ) {
   
   # ----- AirNow = Good --------------------------------------------------------
