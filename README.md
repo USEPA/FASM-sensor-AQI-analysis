@@ -1,7 +1,14 @@
 # FASM-sensor-AQI-analysis
 ## Background and Overview
 
-This repository contains code to accompany the AirNow Fire and Smoke Map (FASM) Sensor Network Data Acceptance Protocol (link), a process that the U.S. Environmental Protection Agency (EPA) and the U.S. Forest Service (USFS) have tested for adding information from different sensor manufacturers onto the FASM. This code is intended to help users generate a particular set of bar plots to anayze and visualize AQI category agreement between their sensors and AirNow reference monitors within a specified radius.
+Timely and accurate air quality information during wildland fires is essential for helping emergency responders make decisions, supporting air and public health agencies in giving informed recommendations, and enabling communities and individuals to take health protective actions. Since its launch, the AirNow Fire and Smoke Map (FASM) has proved to be a valuable resource providing timely and accurate air quality information, but there are still areas where monitoring data is sparse. Adding additional air sensor data can help improve coverage, but careful consideration is needed to ensure that FASM remains a trustworthy source of near real-time fine particulate matter (PM2.5) information.
+
+This repository contains code to accompany the FASM Air Sensor Network Data Acceptance Protocol (link), a process and list of requirements that the U.S. Environmental Protection Agency (EPA) and the U.S. Forest Service (USFS) have developed from a pilot process for acceptance and display of new air sensor networks onto FASM. Interested data providers must follow the protocol to be considered for inclusion on the map. The core principle driving the decision to include a sensor network on FASM is whether the additional PM2.5 data provides value to users during smoke episodes. A sensor network would be prioritized if it adds new insights or extends coverage to the map.
+
+The protocol outlines a series of requirements that aim to 1) describe the sensor, 2) describe the network, 3) ensure timely data reporting and transmission, 4) document the quality assurance and control methodology used, 5) demonstrate collocated sensor performance at high smoke concentrations in addition to meeting EPA’s sensor performance targets, and 6) demonstrate good comparability of data between the sensor network and the permanent and temporary monitoring network using thresholds developed from the pilot process.
+
+This code is intended to help users generate a particular set of bar plots to analyze and visualize AQI category agreement between their sensors and AirNow reference monitors within a specified radius (aligned with the data requirements in Table 4 in the protocol).
+
 ## Structure and Contents
 
 The following directory is used to organize the files in this repository:
@@ -96,7 +103,7 @@ Elizabeth Good, Physical Scientist<br>U.S. EPA, Office of Air Quality Planning a
 
 This code relys on functions from packages by Dr. Jonathan Callahan and Mazama Science. Visit [Mazama Science](https://github.com/MazamaScience) on GitHub to read package documentation.
 
-Thank you to Clarity Movement Co. (EPA MTA 1643-25, FS MTA 25-RD-11132543-061) and PurpleAir (MTA #1361-19) for providing example data via the cited Material Transfer Agreements. Clarity and PurpleAir are two sensor manufacturers currently displayd on the Fire and Smoke Map.
+Thank you to Clarity Movement Co. (EPA MTA 1643-25, FS MTA 25-RD-11132543-061) and PurpleAir (MTA #1361-19) for providing example data via the cited Material Transfer Agreements. Clarity and PurpleAir are two sensor manufacturers currently displayed on the Fire and Smoke Map.
 ## Disclaimer
 
 The United States Environmental Protection Agency (EPA) GitHub project code is provided on an "as is" basis and the user assumes responsibility for its use. EPA has relinquished control of the information and no longer has responsibility to protect the integrity, confidentiality, or availability of the information. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by EPA. The EPA seal and logo shall not be used in any manner to imply endorsement of any commercial product or activity by EPA or the United States Government. 
