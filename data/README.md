@@ -1,8 +1,8 @@
 ## FASM-sensor-AQI-analysis/data
 
-This folder is for sensor data. It already contains some example sensor data that is used to guide users through the tutorial and is where users should save their own sensor data when they are ready to complete the analysis. 
+This folder is for sensor data. It already contains some example sensor data to guide users through the tutorial, and this folder is where users should save their own sensor data when they are ready to complete the analysis. 
 
-Example sensor data is contained in two csv files (see **Requirements for Sensor Data** in main README): the metadata and the time-series data. Contained in this folder are example sensor data from two sensor manufacturers already displayed on the Fire and Smoke Map. Thank you to PurpleAir (MTA #1261-19) and to Clarity Movement Co. (EPA MTA 1643-25, FS MTA 25-RD-11132543-061) for providing these data via the cited Material Transfer Agreements.
+Example sensor data is contained in two csv files (see **Requirements for Sensor Data** in main README): the metadata and the time-series data. In this folder are example sensor data from two sensor manufacturers already displayed on the Fire and Smoke Map. Thank you to PurpleAir (MTA #1261-19) and to Clarity Movement Co. (EPA MTA 1643-25, FS MTA 25-RD-11132543-061) for providing these data via the cited Material Transfer Agreements.
 
 The file *'clarity_data.csv'* contains the example time-series data for Clarity sensors from May 30, 2023 through September 29, 2023. The first column is the *datetime*, and each following column is for a specific sensor *deviceDeploymentID* with hourly PM2.5 concentrations.
 
