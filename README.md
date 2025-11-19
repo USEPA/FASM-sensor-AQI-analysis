@@ -1,13 +1,13 @@
 # FASM-sensor-AQI-analysis
 ## Background and Overview
 
-Timely and accurate air quality information during wildland fires is essential for helping emergency responders make decisions, supporting air and public health agencies in giving informed recommendations, and enabling communities and individuals to take health protective actions. Since its launch, the AirNow Fire and Smoke Map (FASM) has proved to be a valuable resource providing timely and accurate air quality information, but there are still areas where monitoring data is sparse. Adding additional air sensor data can help improve coverage, but careful consideration is needed to ensure that FASM remains a trustworthy source of near real-time fine particulate matter (PM2.5) information.
+Timely and accurate air quality information during wildland fires is essential for helping emergency responders make decisions, supporting air and public health agencies in giving informed recommendations, and enabling communities and individuals to take health protective actions. Since its launch, the [AirNow Fire and Smoke Map (FASM)](https://fire.airnow.gov/) has proved to be a valuable resource providing timely and accurate air quality information, but there are still areas where monitoring data is sparse. Adding additional air sensor data can help improve coverage, but careful consideration is needed to ensure that FASM remains a trustworthy source of near real-time fine particulate matter (PM2.5) information.
 
 This repository contains code to accompany the FASM Air Sensor Network Data Acceptance Protocol (link), a process and list of requirements that the U.S. Environmental Protection Agency (EPA) and the U.S. Forest Service (USFS) have developed from a pilot process for acceptance and display of new air sensor networks onto FASM. Interested data providers must follow the protocol to be considered for inclusion on the map. The core principle driving the decision to include a sensor network on FASM is whether the additional PM2.5 data provides value to users during smoke episodes. A sensor network would be prioritized if it adds new insights or extends coverage to the map.
 
 The protocol outlines a series of requirements that aim to 1) describe the sensor, 2) describe the network, 3) ensure timely data reporting and transmission, 4) document the quality assurance and control methodology used, 5) demonstrate collocated sensor performance at high smoke concentrations in addition to meeting EPA’s sensor performance targets, and 6) demonstrate good comparability of data between the sensor network and the permanent and temporary monitoring network using thresholds developed from the pilot process.
 
-This code is intended to help users generate a particular set of bar plots to analyze and visualize AQI category agreement between their sensors and AirNow reference monitors within a specified radius (aligned with the data requirements in Table 4 in the protocol).
+This repository contains code that is intended to help users generate a particular set of bar plots to analyze and visualize AQI category agreement between their sensors and AirNow reference monitors within a specified radius (aligned with the data requirements in Table 4 in the protocol).
 
 ## Structure and Contents
 
@@ -98,7 +98,7 @@ Once your sensor data is in the appropriate *mts_monitor* format as described ab
 
 Please direct inquiries to:
 
-Elizabeth Good, Physical Scientist<br>U.S. EPA, Office of Air Quality Planning and Standards<br>Ambient Air Monitoring Group<br>Email: good.elizabeth@epa.gov
+Elizabeth Good, Physical Scientist<br>U.S. EPA, Office of State Air Partnerships<br>Ambient Air Monitoring Branch<br>Email: good.elizabeth@epa.gov
 ## References and Acknowledgements 
 
 This code relys on functions from packages by Dr. Jonathan Callahan and Mazama Science. Visit [Mazama Science](https://github.com/MazamaScience) on GitHub to read package documentation.
