@@ -117,3 +117,12 @@ create_plots_by_category(AQI_unlisted = AQI_unlisted,
                          num_plots = max(AQI_unlisted$airnow), # determine the maximum AQI category reported by AirNow
                          threshold_1 = 30, # input the threshold for plus/minus one AQI category (default is 30)
                          threshold_2 = 1)  # input the threshold for plus/minus two or more AQI categories (default is 1)
+
+# ----- create table of AQI category hours -------------------------------------
+
+tab <- table(
+  "Sensor" = AQI_unlisted$sensor, # makes the sensor AQI categories the rows
+  "Monitor" = AQI_unlisted$airnow # makes the monitor AQI categories the columns
+)
+
+addmargins(tab) # includes sums of all rows and columns 

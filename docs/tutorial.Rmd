@@ -223,6 +223,21 @@ create_plots_by_category(AQI_unlisted = AQI_unlisted,
 ```
 
 
+# Tabular Data
+
+A table of hourly AQI category agreements can also be useful. The base R `table` function accepts the columns and rows for a table to output a table of hourly counts of AQI category agreements.
+
+```{r table, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
+
+tab <- table(
+  "Sensor" = AQI_unlisted$sensor, # makes the sensor AQI categories the rows
+  "Monitor" = AQI_unlisted$airnow # makes the monitor AQI categories the columns
+)
+
+addmargins(tab) # includes sums of all rows and columns 
+```
+
+
 # Example 2: PurpleAir
 
 Below is an additional, more streamlined example of the template script with a second sensor manufacturer: PurpleAir. This second example uses public PurpleAir sensor data in the southwest U.S. from August 28, 2024 through October 3, 2024. Thank you to PurpleAir for providing these data via MTA #1261-19.
@@ -370,4 +385,18 @@ create_plots_by_category(AQI_unlisted = AQI_unlisted,
                          threshold_2 = 1 
                          # input the threshold for plus/minus two or more AQI categories (default is 1)
                          )
+```
+
+
+
+# Tabular Data
+
+```{r pa table, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
+
+tab <- table(
+  "Sensor" = AQI_unlisted$sensor, # makes the sensor AQI categories the rows
+  "Monitor" = AQI_unlisted$airnow # makes the monitor AQI categories the columns
+)
+
+addmargins(tab) # includes sums of all rows and columns 
 ```
