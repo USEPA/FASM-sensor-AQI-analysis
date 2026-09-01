@@ -1,6 +1,6 @@
 ## FASM-sensor-AQI-analysis/R
 
-This folder contains .R files used to complete the AQI category agreement analysis. One file is a template that is edited by the user to complete the anlysis, and two files are sources of supporting functions and code that are loaded into the editable file. These two supporting files do not need to be edited by the user.
+This folder contains .R files used to complete the AQI category agreement analysis. One file is a template that is edited by the user to complete the analysis, and two files are sources of supporting functions and code that are loaded into the editable file. These two supporting files do not need to be edited by the user.
 
 The *'template_for_sensor_vs_monitor.R'* file is the fillable template that users walk through to complete the AQI category agreement analysis. 
 There are a few designated spots where user input is required to load in their sensor data for analysis as well as optional areas where users can edit some customizable 
