@@ -23,7 +23,7 @@ FASM-sensor-AQI-analysis
 The working directory for all scripts and R Markdown documents will be
 `FASM-sensor-AQI-analysis/`.
 
-The `docs/` directory contains the Rmd and html files the are the tutorial walking through the template script. They are linked to the [GitHub Pages website](https://urban-bassoon-v9zkyqw.pages.github.io/) for this repository.
+The `docs/` directory contains the Rmd and html files the are the tutorial walking through the template script. They are linked to the [GitHub Pages website](https://usepa.github.io/FASM-sensor-AQI-analysis/) for this repository.
 
 The `R/` directory contains the template R script for users to fill in and run the code to perform the analysis as well as supporting source R scripts with necessary functions and packages.
 
@@ -93,7 +93,7 @@ The time-series data file must have each row as an hourly **UTC** timestamp (wit
 * For example, if sensor123abc is the first row in the metadata, then sensor123abc must also be the second column in the time-series data after the datetime column. If sensor456def is the second row in the metadata, then sensor456def must also be the third column in the time-series data after the datetime column and the first sensor.
 ### The AQI Category Agreement Analysis
 
-Once your sensor data is in the appropriate *mts_monitor* format as described above and your code environment is appropriately configured, you can use the scripts in this repository to make your own AQI category agreement bar plots. Add your metadata and time-series data files to the `data` folder of this repository and begin walking through the `template_for_sensor_vs_monitor.R` file. You can follow the tutorial laid out in the [GitHub Pages website](https://urban-bassoon-v9zkyqw.pages.github.io/tutorial.html), which includes a narrative of instructions that go with the template file and shows the use of example sensor data. Example sensor data is available for use to follow the tutorial precisely before trying with your own sensor data.
+Once your sensor data is in the appropriate *mts_monitor* format as described above and your code environment is appropriately configured, you can use the scripts in this repository to make your own AQI category agreement bar plots. Add your metadata and time-series data files to the `data` folder of this repository and begin walking through the `template_for_sensor_vs_monitor.R` file. You can follow the tutorial laid out in the [GitHub Pages website](https://usepa.github.io/FASM-sensor-AQI-analysis/), which includes a narrative of instructions that go with the template file and shows the use of example sensor data. Example sensor data is available for use to follow the tutorial precisely before trying with your own sensor data.
 ## Contact
 
 Please direct inquiries to:
