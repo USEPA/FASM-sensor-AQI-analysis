@@ -195,6 +195,25 @@ MazamaLocationUtils::table_leafletAdd(
 ```
 
 
+# List Adjacent Pairs 
+
+It could also be useful to print a table of the paired sensor/AirNow monitors IDs to easily identify which sensors are nearby which monitors. The below code selects the *deviceDeploymentID* and the *airnow_id* columns from the meta data dataframe of the "sensor_adjacent" list to print a table of the paired nearby sensor/monitor IDs.
+
+```{r table of pairs, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
+
+sensor_adjacent$meta %>%
+  select(deviceDeploymentID, airnow_id) %>%
+  datatable(              # function for creating an interactive table
+    options = list(
+      pageLength = 25,    # edit how many rows should appear in a table page
+      scrollX = TRUE      # include a horizontal scroll bar on the table
+    ),
+    rownames = FALSE
+  )
+
+```
+
+
 # Unlisted AQI Category Data Frame
 
 The `create_AQI_unlisted` function returns a data frame named “AQI_unlisted” with two columns, *airnow* and *sensor*. This is the PM2.5 NowCast AQI category for each hour where the sensor and AirNow monitor pairs both have data. The AQI categories are represented as numbers, as described in the table below. To read more about the AQI categories, see https://www.airnow.gov/aqi/aqi-basics/. 
@@ -398,6 +417,23 @@ MazamaLocationUtils::table_leafletAdd(
   leaflet::addControl(
     html = paste0("<h3>Mapped locations of ", nrow(airnow_adjacent$meta), " AirNow monitors and ", nrow(sensor_adjacent$meta), " nearby sensors", "</h3>"),
     position = "topright")
+```
+
+
+## List Adjacent Pairs 
+
+```{r pa table of pairs, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, fig.align = 'center', fig.dim = c(10,6)}
+
+sensor_adjacent$meta %>%
+  select(deviceDeploymentID, airnow_id) %>%
+  datatable(              # function for creating an interactive table
+    options = list(
+      pageLength = 25,    # edit how many rows should appear in a table page
+      scrollX = TRUE      # include a horizontal scroll bar on the table
+    ),
+    rownames = FALSE
+  )
+
 ```
 
 

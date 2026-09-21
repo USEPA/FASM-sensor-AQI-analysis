@@ -119,6 +119,18 @@ MazamaLocationUtils::table_leafletAdd(
     html = paste0("<h3>Mapped locations of ", nrow(airnow_adjacent$meta), " AirNow monitors and ", nrow(sensor_adjacent$meta), " nearby sensors", "</h3>"),
     position = "topright")
 
+# ----- list adjacent pairs ----------------------------------------------------
+
+sensor_adjacent$meta %>%
+  select(deviceDeploymentID, airnow_id) %>%
+  datatable(              # function for creating an interactive table
+    options = list(
+      pageLength = 25,    # edit how many rows should appear in a table page
+      scrollX = TRUE      # include a horizontal scroll bar on the table
+    ),
+    rownames = FALSE
+  )
+
 # ----- create unlisted AQI category data frame --------------------------------
 
 AQI_unlisted <- create_AQI_unlisted(sensor_adjacent = sensor_adjacent,
