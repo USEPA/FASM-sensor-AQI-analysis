@@ -167,6 +167,34 @@ airnow_adjacent <-
 ```
 
 
+# Map Adjacent Pairs 
+
+It can be helpful to visualize geographically where the nearby sensor/monitor pairs are located across the county. The MazamaLocationUtils package includes leaflet functions for mapping devices with latitude and longitude information. This series of functions starts be making a map object of the AirNow monitors, then adds the nearby sensors to the map. It includes a title which counts the number of AirNow monitors and nearby sensors. Keep in mind that one AirNow monitor may have more than one sensor within the specified nearby radius.
+
+```{r map, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, out.width = "100%", out.height = "600px", fig.align = "center"}
+
+# This starts by creating a leaflet map of just the airnow monitors
+map <- MazamaLocationUtils::table_leaflet(
+  airnow_adjacent$meta,
+  jitter = 0
+)
+
+# Then add the nearby sensors to the map object 
+MazamaLocationUtils::table_leafletAdd(
+  map,
+  sensor_adjacent$meta,
+  jitter = 0,
+  fillColor = "salmon",
+  color = "black"
+) %>%
+  
+  # Then add a title which include a count of monitors and their nearby sensor pairs
+  leaflet::addControl(
+    html = paste0("<h3>Mapped locations of ", nrow(airnow_adjacent$meta), " AirNow monitors and ", nrow(sensor_adjacent$meta), " nearby sensors", "</h3>"),
+    position = "topright")
+```
+
+
 # Unlisted AQI Category Data Frame
 
 The `create_AQI_unlisted` function returns a data frame named “AQI_unlisted” with two columns, *airnow* and *sensor*. This is the PM2.5 NowCast AQI category for each hour where the sensor and AirNow monitor pairs both have data. The AQI categories are represented as numbers, as described in the table below. To read more about the AQI categories, see https://www.airnow.gov/aqi/aqi-basics/. 
@@ -344,6 +372,32 @@ sensor_adjacent <-
 airnow_adjacent <-
   airnow_adjacent %>%
   monitor_nowcast(includeShortTerm = TRUE)
+```
+
+
+## Map Adjacent Pairs 
+
+```{r pa map, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, out.width = "100%", out.height = "600px", fig.align = "center"}
+
+# This starts by creating a leaflet map of just the airnow monitors
+map <- MazamaLocationUtils::table_leaflet(
+  airnow_adjacent$meta,
+  jitter = 0
+)
+
+# Then add the nearby sensors to the map object 
+MazamaLocationUtils::table_leafletAdd(
+  map,
+  sensor_adjacent$meta,
+  jitter = 0,
+  fillColor = "salmon",
+  color = "black"
+) %>%
+  
+  # Then add a title which include a count of monitors and their nearby sensor pairs
+  leaflet::addControl(
+    html = paste0("<h3>Mapped locations of ", nrow(airnow_adjacent$meta), " AirNow monitors and ", nrow(sensor_adjacent$meta), " nearby sensors", "</h3>"),
+    position = "topright")
 ```
 
 

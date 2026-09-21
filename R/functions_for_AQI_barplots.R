@@ -210,6 +210,7 @@ create_combined_barplot <- function(
     geom_segment(aes(x = 0.5, y = threshold_2, xend = 4.5, yend = threshold_2), lty = 2, linewidth = 1) +
     geom_segment(aes(x = 7.5, y = threshold_2, xend = 11.5, yend = threshold_2), lty = 2, linewidth = 1) +
     labs(
+      title = paste("AQI Agreement from", aligned_startdate, "to", aligned_enddate),
       y = "Percentage of Sensor NowCast Datapoints",
       x = "AQI Category Difference (Sensor - AirNow)"
     ) +
@@ -631,7 +632,9 @@ create_plots_by_category <- function(
                                      size = 15),
                   left = text_grob("Percentage of Sensor NowCast Datapoints",
                                    rot = 90,
-                                   size = 15))
+                                   size = 15),
+                  top = text_grob(paste("AQI Agreement from", aligned_startdate, "to", aligned_enddate),
+                                  size = 18))
   
 }
 
